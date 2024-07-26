@@ -1,6 +1,8 @@
-@tailwind base;
+@import "app/globals.css";
+
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 @layer base {
   :root {
