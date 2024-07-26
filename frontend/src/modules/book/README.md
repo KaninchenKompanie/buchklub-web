@@ -1,0 +1,1 @@
+Everything regarding book entity
