@@ -10,4 +10,6 @@ source .venv/bin/activate
 pip install -r requirements.txt
 
 start server:
+fastapi dev main.py
+
 https://github.com/tiangolo/fastapi
