@@ -27,3 +27,9 @@ SEITEN
 
 - Seite oder Overlay zu Buch
 
+Statistics
+- Welche Kategorien wurden wie im Durschnitt bewertet?
+- Verteilung der Genre der gelesenen Bücher
+- Buch mit bestbewertetem Plot/Story/Setting/Characeters/Engagement
+- Kontroversestes Buch
+- Beliebtestes Buch
