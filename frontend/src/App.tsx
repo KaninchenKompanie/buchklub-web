@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Library from "./pages/Library";
 import Statistics from "./pages/Statistics";
 import "../app/globals.css";
 import "./lib/axios";
@@ -10,16 +9,50 @@ import PrivateElement from "./modules/common/components/PrivateElement";
 import AuthProvider from "./modules/auth/components/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 import { PagePaths } from "./pages/PagePaths";
+import Library from "./pages/Library";
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/shelf" element={<Library />} />
-        <Route path="/statistics" element={<Statistics />} />
-      </Routes>
-    </Layout>
+    <div>
+      <AuthProvider>
+        <Routes>
+          <Route path={PagePaths.login} element={<LoginView />} />
+          <>
+            <Route
+              path={PagePaths.home}
+              element={
+                <Layout>
+                  <PrivateElement>
+                    <Home />
+                  </PrivateElement>
+                </Layout>
+              }
+            />
+            <Route
+              path={PagePaths.shelf}
+              element={
+                <Layout>
+                  <PrivateElement>
+                    <Library />
+                  </PrivateElement>
+                </Layout>
+              }
+            />
+            <Route
+              path={PagePaths.statistics}
+              element={
+                <Layout>
+                  <PrivateElement>
+                    <Statistics />
+                  </PrivateElement>
+                </Layout>
+              }
+            />
+          </>
+        </Routes>
+      </AuthProvider>
+      <Toaster />
+    </div>
   );
 }
 
