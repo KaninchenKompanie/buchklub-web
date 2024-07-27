@@ -3,12 +3,12 @@ from sqlmodel import create_engine, Session, SQLModel
 engine = None
 
 config = {
-    "db-user": "robert",
+    "db-user": "dbuser",
     "db-pass": "qwer1234"
 }
 
 db_name = "buchklub-db"
-db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@localhost/{db_name}"
+db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@db/{db_name}"
 engine = create_engine(db_url, echo=True)
 
 def create_db_and_tables():

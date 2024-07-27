@@ -37,3 +37,7 @@ The contents of the API go into the `api` dir. There every entity is separated i
 `crud.py` dictates the interaction with the db through the ORM of SQLModel
 
 `model.py` holds the SQLModel model definitions
+
+## Apply a migration
+
+to apply a database migration: `alembic revision --autogenerate -m "<message>"`

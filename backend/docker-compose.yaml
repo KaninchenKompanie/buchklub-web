@@ -1,0 +1,17 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    env_file:
+      - environment.env
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
