@@ -88,7 +88,7 @@ def find_best_books(s: Session):
 
     return best_books, book_bayesian_avgs, book_standard_deviations
 
-def find_single_best_book(book_bayesian_avgs):
+def find_best_and_worst_book(book_bayesian_avgs):
     # Convert book_bayesian_avgs to DataFrame for easier manipulation
     df = pd.DataFrame(book_bayesian_avgs).T
 
@@ -100,8 +100,10 @@ def find_single_best_book(book_bayesian_avgs):
 
     # Identify the book with the highest median percentile
     best_book = percentiles['median_percentile'].idxmax()
+    worst_book = percentiles['median_percentile'].idxmin()
 
-    return best_book, percentiles.loc[best_book]
+    return best_book, percentiles.loc[best_book], worst_book, percentiles.loc[worst_book]
+
 
 def find_most_controversial_book(book_standard_deviations):
     # Identify the book with the highest standard deviation
@@ -111,19 +113,23 @@ def find_most_controversial_book(book_standard_deviations):
 def get_book_statistics(s: Session) -> Dict[str, Any]:
     best_books, book_bayesian_avgs, book_standard_deviations = find_best_books(s=s)
     
-    single_best_book, book_percentiles = find_single_best_book(book_bayesian_avgs)
+    single_best_book, best_percentiles, single_worst_book, worst_percentiles = find_best_and_worst_book(book_bayesian_avgs)
     
     most_controversial_book, std_dev = find_most_controversial_book(book_standard_deviations)
     
     return {
-        "best_books_per_category": best_books,
-        "single_best_book": {
-            "book": single_best_book,
-            "percentiles": book_percentiles.to_dict()
-        },
-        "most_controversial_book": {
-            "book": most_controversial_book,
-            "standard_deviation": std_dev
+            "best_books_per_category": best_books,
+            "single_best_book": {
+                "book": single_best_book,
+                "percentiles": best_percentiles.to_dict()
+            },
+            "single_worst_book": {
+                "book": single_worst_book,
+                "percentiles": worst_percentiles.to_dict()
+            },
+            "most_controversial_book": {
+                "book": most_controversial_book,
+                "standard_deviation": std_dev
+            }
         }
-    }
 
