@@ -1,6 +1,5 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Shelf from "./pages/Shelf";
 import Statistics from "./pages/Statistics";
 import "../app/globals.css";
 import "./lib/axios";
@@ -10,6 +9,7 @@ import PrivateElement from "./modules/common/components/PrivateElement";
 import AuthProvider from "./modules/auth/components/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 import { PagePaths } from "./pages/PagePaths";
+import Library from "./pages/Library";
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
               element={
                 <Layout>
                   <PrivateElement>
-                    <Shelf />
+                    <Library />
                   </PrivateElement>
                 </Layout>
               }
