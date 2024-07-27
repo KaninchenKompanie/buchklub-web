@@ -7,10 +7,10 @@ Linux:
 python3 -m venv .venv
 source .venv/bin/activate
 
-pip install -r requirements.txt
+pip install -e .
 
 start server:
-fastapi dev main.py
+fastapi dev src/api/main.py
 
 https://github.com/tiangolo/fastapi
 # database
@@ -28,3 +28,12 @@ https://github.com/tiangolo/fastapi
 
 5. install headers: ubuntu `sudo apt-get install libpython3.11-dev libpq-dev`
 6. install 
+
+## General structure
+The contents of the API go into the `api` dir. There every entity is separated into directories with at least three files:
+
+`view.py` dictates the FastAPI endpoints
+
+`crud.py` dictates the interaction with the db through the ORM of SQLModel
+
+`model.py` holds the SQLModel model definitions

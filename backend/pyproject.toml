@@ -1,0 +1,18 @@
+[project]
+name = "buchklub-backend"
+version = "0.0.1"
+readme = "README.md"
+requires-python = "==3.11.9"
+dependencies = [
+    "fastapi == 0.111.1",
+    "sqlmodel == 0.0.21"
+    "alembic ~= 1.13"
+]
+
+
+[build-system]
+requires = [
+  "setuptools >= 61.0",
+  "wheel",
+]
+build-backend = "setuptools.build_meta"
