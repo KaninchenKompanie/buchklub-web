@@ -7,20 +7,20 @@ from api.rating.model import RatingBase
 
 router = APIRouter()
 
-@router.get("/ratings/")
-async def ratings_list(s: Session = Depends(get_session)):
+@router.get("/")
+def ratings_list(s: Session = Depends(get_session)):
     return read_ratings(s)
 
-@router.get("/ratings/{rating_id}")
-async def rating(rating_id: int, s: Session = Depends(get_session)):
+@router.get("/{rating_id}")
+def rating(rating_id: int, s: Session = Depends(get_session)):
     return read_rating(rating_id, s)
 
-@router.post("/ratings/")
-async def write_rating(rating: RatingBase, s: Session = Depends(get_session)):
+@router.post("/")
+def write_rating(rating: RatingBase, s: Session = Depends(get_session)):
     return create_rating(rating, s)
 
-@router.delete("/ratings/{rating_id}")
-async def delete_rating(rating_id: int, s: Session = Depends(get_session)):
+@router.delete("/{rating_id}")
+def delete_rating(rating_id: int, s: Session = Depends(get_session)):
     return delete_rating(rating_id, s)
 
 # @router.put("/ratings/")
