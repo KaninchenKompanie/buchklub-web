@@ -9,7 +9,8 @@ dependencies = [
     "alembic ~= 1.13",
     "psycopg2-binary ~= 2.9",
     "PyJWT ~= 2.8",
-    "python-decouple ~= 3.8"
+    "python-decouple ~= 3.8",
+    "pandas ~= 2.2"
   ]
 
 
