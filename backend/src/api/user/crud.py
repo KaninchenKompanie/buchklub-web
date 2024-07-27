@@ -18,7 +18,7 @@ def new_user(user: UserCreate, s: Session = Depends(get_session)):
 def validate_user(user: UserCreate, s: Session = Depends(get_session)):
     try:
         ret_user: User = s.exec(select(User).where(User.name == user.name)).one()
-        if ret_user.hashed_password == user.password:
+        if ret_user.hashed_password == hash(user.password):
             return sign_jwt(ret_user.id)
         else:
             raise HTTPException(status_code=401, detail="Invalid login")
