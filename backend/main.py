@@ -16,7 +16,7 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-class Shelf:
+class Library:
     books: list
 
 class Book:
@@ -33,8 +33,8 @@ catalogue = [
 ]
 
 # 
-@app.get("/shelf")
-def get_shelf():
+@app.get("/library")
+def get_library():
     return catalogue
 
 

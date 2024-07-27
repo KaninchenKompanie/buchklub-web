@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Shelf from "./pages/Shelf";
+import Library from "./pages/Library";
 import Statistics from "./pages/Statistics";
 import "../app/globals.css";
 import Layout from "@/components/layout/Layout.tsx";
@@ -10,7 +10,7 @@ function App() {
     <Layout>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/shelf" element={<Shelf />} />
+        <Route path="/library" element={<Library />} />
         <Route path="/statistics" element={<Statistics />} />
       </Routes>
     </Layout>

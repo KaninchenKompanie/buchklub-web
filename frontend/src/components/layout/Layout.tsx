@@ -14,7 +14,7 @@ export default function Layout({ children }) {
         <Button variant="ghost" size="icon" onClick={() => navigate("/")}>
           <LuHome size={iconSize} />
         </Button>
-        <Button variant="ghost" size="icon" onClick={() => navigate("/shelf")}>
+        <Button variant="ghost" size="icon" onClick={() => navigate("/library")}>
           <GiBookshelf size={iconSize} />
         </Button>
         <Button
