@@ -2,8 +2,8 @@ import { localStorageTokenKeys } from "../constants";
 import { User } from "../types";
 
 export function getUserDataFromAcessToken(): User | null {
-  const token = getAccessTokenFromStorage();
-  if (!token) return null;
+  // const token = getAccessTokenFromStorage();
+  // if (!token) return null;
 
   // TODO decode token correctly
   return { name: "John Doe" };

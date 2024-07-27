@@ -38,6 +38,17 @@ The contents of the API go into the `api` dir. There every entity is separated i
 
 `model.py` holds the SQLModel model definitions
 
+
+## Start DB
+you will need docker and docker compose please install this
+
+run `docker compose -f docker-compose.yaml up`
+
+database is running :D
+
+the storage is not yet persistent if you need entries define them in the `database.py` file in `create_mockdata()`
+
 ## Apply a migration
 
 to apply a database migration: `alembic revision --autogenerate -m "<message>"`
+

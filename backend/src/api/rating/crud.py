@@ -4,6 +4,7 @@ from fastapi import Depends
 from api.rating.model import Rating
 from api.database import get_session
 
+
 async def create_rating(rating: Rating, s: Session = Depends(get_session)):
     s.add(rating)
     s.commit()
