@@ -9,7 +9,7 @@ import PrivateElement from "./modules/common/components/PrivateElement";
 import AuthProvider from "./modules/auth/components/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 import { PagePaths } from "./pages/PagePaths";
-import Library from "./pages/Library";
+import Shelf from "./pages/Shelf";
 
 function App() {
   return (
@@ -33,7 +33,7 @@ function App() {
               element={
                 <Layout>
                   <PrivateElement>
-                    <Library />
+                    <Shelf />
                   </PrivateElement>
                 </Layout>
               }

@@ -5,14 +5,15 @@ import React, { useEffect, useState } from 'react'
 import { GiFeather } from "react-icons/gi";
 import AddBook from '@/modules/book/components/AddBook';
 import { Book } from '@/modules/book/configurations/types';
+import RateBook from '@/components/RateBook';
 
 
-export default function Library() {
+export default function Shelf() {
 
   const [catalogue, setCatalogue] = useState<Book[]>([]);
 
   useEffect(() => {
-    fetch('http://127.0.0.1:8000/library')
+    fetch('http://127.0.0.1:8000/shelf')
       .then(response => response.json())
       .then(catalogue => setCatalogue(catalogue))
       .catch(error => console.error(error))
@@ -48,9 +49,8 @@ export default function Library() {
             <TableRow key={index}>
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
-              {/* <TableCell> {goldenFeathers(book.rating)} </TableCell> */}
-              <TableCell><Button>Bewerten</Button></TableCell>
-              {/* <TableCell> <GiFeather />{book.rating} </TableCell> */}
+              <TableCell> {goldenFeathers(book.rating)} </TableCell>
+              <TableCell><RateBook /></TableCell>
             </TableRow>
           ))}
         </TableBody>
