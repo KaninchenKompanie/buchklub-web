@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/chart";
 import { ComponentProps } from "react";
 import { chartColors } from "../configurations/constants";
+import { cn } from "@/lib/utils";
 
 const chartConfig = {
   desktop: {
@@ -36,6 +37,7 @@ export function RadarChartCard({
   valueKey,
   title,
   description,
+  className,
   ...props
 }: RadarChartCardProps) {
   const chartData = data.map((d, index) => ({
@@ -44,7 +46,7 @@ export function RadarChartCard({
   }));
 
   return (
-    <Card {...props}>
+    <Card className={cn("min-w-96", className)} {...props}>
       <CardHeader className="items-center">
         <CardTitle>{title}</CardTitle>
         <CardDescription>{description}</CardDescription>
