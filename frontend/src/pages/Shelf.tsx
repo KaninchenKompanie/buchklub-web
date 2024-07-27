@@ -32,6 +32,9 @@ export default function Shelf() {
       <div className='ml-auto mb-10'>
         <AddBook />
       </div>
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Bücherregal
+      </h1>
       <Table>
         <TableHeader>
           <TableRow>
@@ -46,11 +49,15 @@ export default function Shelf() {
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
               <TableCell> {goldenFeathers(book.rating)} </TableCell>
+              <TableCell><Button>Bewerten</Button></TableCell>
               {/* <TableCell> <GiFeather />{book.rating} </TableCell> */}
             </TableRow>
           ))}
         </TableBody>
       </Table>
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+        Bibliothek
+      </h1>
     </div>
   )
 }
