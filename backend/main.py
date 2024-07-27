@@ -22,19 +22,20 @@ class Shelf:
 class Book:
     name: str
     author: str
+    rating: int
 
-blb = [
-    { 'name': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald' },
-    { 'name': 'The Catcher in the Rye', 'author': 'J.D. Salinger' },
-    { 'name': 'To Kill a Mockingbird', 'author': 'Harper Lee' },
-    { 'name': '1984', 'author': 'George Orwell' },
-    { 'name': 'Pride and Prejudice', 'author': 'Jane Austen' },
+catalogue = [
+    { 'name': 'The Great Gatsby', 'author': 'F. Scott Fitzgerald' , 'rating': 3},
+    { 'name': 'The Catcher in the Rye', 'author': 'J.D. Salinger' , 'rating': 2},
+    { 'name': 'To Kill a Mockingbird', 'author': 'Harper Lee' , 'rating': 5},
+    { 'name': '1984', 'author': 'George Orwell' , 'rating': 5},
+    { 'name': 'Pride and Prejudice', 'author': 'Jane Austen' , 'rating': 4},
 ]
 
 # 
 @app.get("/shelf")
 def get_shelf():
-    return blb
+    return catalogue
 
 
 @app.get("/book/{book_id}")
