@@ -10,6 +10,7 @@ import {
   setRefreshTokenToStorage,
 } from "../utils";
 import { toast } from "sonner";
+import { PagePaths } from "@/pages/PagePaths";
 
 interface AuthContextType {
   token: string | null;
@@ -41,7 +42,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
       setAccessTokenToStorage(tokenData.accessToken);
       setRefreshTokenToStorage(tokenData.refreshToken);
 
-      navigate("/");
+      navigate(PagePaths.home);
     } catch (err) {
       // TODO better error message based on error
       toast.error("Sorry, something went wrong");
@@ -53,7 +54,7 @@ const AuthProvider = ({ children }: { children: ReactNode }) => {
   const handleLogout = () => {
     setToken(null);
     removeTokensFromStorage();
-    navigate("/login");
+    navigate(PagePaths.login);
   };
 
   const user = getUserDataFromAcessToken();

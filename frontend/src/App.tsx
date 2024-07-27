@@ -9,16 +9,17 @@ import LoginView from "./modules/auth/components/LoginView";
 import PrivateElement from "./modules/common/components/PrivateElement";
 import AuthProvider from "./modules/auth/components/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
+import { PagePaths } from "./pages/PagePaths";
 
 function App() {
   return (
     <div>
       <AuthProvider>
         <Routes>
-          <Route path="/login" element={<LoginView />} />
+          <Route path={PagePaths.login} element={<LoginView />} />
           <>
             <Route
-              path="/"
+              path={PagePaths.home}
               element={
                 <Layout>
                   <PrivateElement>
@@ -28,7 +29,7 @@ function App() {
               }
             />
             <Route
-              path="/shelf"
+              path={PagePaths.shelf}
               element={
                 <Layout>
                   <PrivateElement>
@@ -38,7 +39,7 @@ function App() {
               }
             />
             <Route
-              path="/statistics"
+              path={PagePaths.statistics}
               element={
                 <Layout>
                   <PrivateElement>
