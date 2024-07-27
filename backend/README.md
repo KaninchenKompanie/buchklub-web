@@ -9,6 +9,10 @@ source .venv/bin/activate
 
 pip install -r requirements.txt
 
+start server:
+fastapi dev main.py
+
+https://github.com/tiangolo/fastapi
 # database
 ## installation
 1. install postgresql 14 from somewhere here: https://www.postgresql.org/
