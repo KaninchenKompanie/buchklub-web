@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react'
 import { Book } from '@/modules/book/types/book';
 import { GiFeather } from "react-icons/gi";
 import AddBook from '@/components/AddBook';
+import RateBook from '@/components/RateBook';
 
 
 export default function Shelf() {
@@ -49,8 +50,7 @@ export default function Shelf() {
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
               <TableCell> {goldenFeathers(book.rating)} </TableCell>
-              <TableCell><Button>Bewerten</Button></TableCell>
-              {/* <TableCell> <GiFeather />{book.rating} </TableCell> */}
+              <TableCell><RateBook /></TableCell>
             </TableRow>
           ))}
         </TableBody>
