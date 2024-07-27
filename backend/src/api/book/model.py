@@ -5,6 +5,7 @@ class BookBase(SQLModel):
     name: str
     author: str
     genre: str
+    year: int
     # ratings: List["Rating"] = Relationship(back_populates="book")
     # comments ff
 
