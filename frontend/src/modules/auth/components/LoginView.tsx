@@ -53,7 +53,7 @@ export default function LoginView() {
         "h-[100vh] w-full flex flex-col items-center justify-center gap-5"
       }
     >
-      <div className={"text-4xl flex gap-4"}>
+      <div className={"text-4xl flex gap-4 font-extrabold"}>
         <GiSelfLove /> Welcome back! You are awesome <GiSelfLove />
       </div>
       <div className={"text-blue-500 text-foreground/80 text-center"}>
