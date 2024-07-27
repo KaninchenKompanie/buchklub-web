@@ -52,11 +52,11 @@ export default function VerticalBarChartCard({
             <XAxis
               type="number"
               tickLine={true}
-              tickMargin={20}
               axisLine={false}
               tickFormatter={(value) => value}
             />
             <YAxis
+              type="category"
               axisLine={false}
               display="none"
               tickLine={false}
