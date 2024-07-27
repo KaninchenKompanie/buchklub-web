@@ -1,4 +1,3 @@
-import useCurrentUser from "../hooks/useCurrentUser";
 import UserWelcome from "./UserWelcome";
 
 export default function UserView() {
