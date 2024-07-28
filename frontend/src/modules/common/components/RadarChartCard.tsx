@@ -1,4 +1,4 @@
-import { PolarAngleAxis, PolarGrid, Radar, RadarChart } from "recharts";
+import { PolarAngleAxis, PolarGrid, PolarRadiusAxis, Radar, RadarChart } from "recharts";
 import {
   Card,
   CardContent,
@@ -29,6 +29,7 @@ type RadarChartCardProps = {
   valueKey: string;
   title: string;
   description: string;
+  scale?: number[]
 } & ComponentProps<typeof Card>;
 
 export function RadarChartCard({
@@ -38,6 +39,7 @@ export function RadarChartCard({
   title,
   description,
   className,
+  scale=[0,8],
   ...props
 }: RadarChartCardProps) {
   const chartData = data.map((d, index) => ({
@@ -59,6 +61,7 @@ export function RadarChartCard({
           <RadarChart data={chartData}>
             <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
             <PolarAngleAxis dataKey={labelKey} />
+            <PolarRadiusAxis angle={30} domain={scale} />
             <PolarGrid />
             <Radar
               dataKey={valueKey}
