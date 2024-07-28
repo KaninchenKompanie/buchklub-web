@@ -10,7 +10,8 @@ dependencies = [
     "psycopg2-binary ~= 2.9",
     "PyJWT ~= 2.8",
     "python-decouple ~= 3.8",
-    "pandas ~= 2.2"
+    "pandas ~= 2.2",
+    "passlib ~= 1.7"
   ]
 
 

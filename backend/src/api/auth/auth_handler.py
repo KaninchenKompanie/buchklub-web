@@ -15,9 +15,9 @@ class JWT(BaseModel):
 def token_response(token: str):
     return JWT(access_token=token)
 
-def sign_jwt(user_id: int) -> JWT:
+def sign_jwt(user_name: str) -> JWT:
     payload = {
-        "user_id": str(user_id),
+        "user_name": user_name,
         "expires": time.time() + 600
     }
 
