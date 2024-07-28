@@ -1,11 +1,16 @@
-from sqlmodel import SQLModel, Field
+from typing import List
+from sqlmodel import SQLModel, Field, Relationship
 
 class BookBase(SQLModel):
     name: str
     author: str
     genre: str
-    # ratings ff
+    year: int
+    # ratings: List["Rating"] = Relationship(back_populates="book")
     # comments ff
 
-class Book(SQLModel, table=True):
+class Book(BookBase, table=True):
     id: int | None = Field(default=None, primary_key=True)
+
+class BookPublic(BookBase):
+    id: int

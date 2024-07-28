@@ -3,4 +3,5 @@ export const PagePaths = {
   home: "/",
   shelf: "/shelf",
   statistics: "/statistics",
+  me: "/me",
 };

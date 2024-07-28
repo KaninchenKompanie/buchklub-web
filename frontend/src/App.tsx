@@ -10,6 +10,7 @@ import AuthProvider from "./modules/auth/components/AuthContext";
 import { Toaster } from "@/components/ui/sonner";
 import { PagePaths } from "./pages/PagePaths";
 import Shelf from "./pages/Shelf";
+import UserPage from "./pages/UserPage";
 
 function App() {
   return (
@@ -44,6 +45,16 @@ function App() {
                 <Layout>
                   <PrivateElement>
                     <Statistics />
+                  </PrivateElement>
+                </Layout>
+              }
+            />
+            <Route
+              path={PagePaths.me}
+              element={
+                <Layout>
+                  <PrivateElement>
+                    <UserPage />
                   </PrivateElement>
                 </Layout>
               }

@@ -6,11 +6,11 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "./ui/dialog";
-import { Button } from "./ui/button";
-import { Label } from "./ui/label";
-import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
-import RatingSelection from "./RatingSelection";
+} from "../../../components/ui/dialog";
+import { Button } from "../../../components/ui/button";
+import { Label } from "../../../components/ui/label";
+import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group";
+import RatingSelection from "../../common/components/RatingSelection";
 
 export default function RateBook() {
   return (

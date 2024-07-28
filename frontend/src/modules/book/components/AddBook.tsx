@@ -6,7 +6,6 @@ import {
   FormLabel,
   FormMessage,
   Form,
-  FormDescription,
 } from "@/components/ui/form.tsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,7 +21,6 @@ import {
 } from "@/components/ui/dialog";
 import { bookSchema } from "../configurations/schemas";
 import { ReactElement } from "react";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Toggle } from "@/components/ui/toggle";
 
 export default function AddBook() {
@@ -75,12 +73,6 @@ export default function AddBook() {
       "Sachbuch",
       "Fachbuch"
     ];
-    let genreBadges: ReactElement[] = [];
-    // genres.forEach((genre) => {
-    //   genreBadges.push(
-    //       {/* <div className="py-1 px-3 m-1 justify-center text-base font-serif italic font-light">{genre}</div> */}
-    //   );
-    // });
     return (
       <FormField
         control={form.control}
@@ -117,27 +109,6 @@ export default function AddBook() {
                     >
                       { genre }
                     </Toggle>
-                    // <FormItem
-                    //   className="flex flex-row items-start space-x-3 space-y-0"
-                    // >
-                    //   <FormControl>
-                    //     <Checkbox
-                    //       checked={field.value?.includes(genre)}
-                    //       onCheckedChange={(checked) => {
-                    //         return checked
-                    //           ? field.onChange([...field.value, genre])
-                    //           : field.onChange(
-                    //             field.value?.filter(
-                    //               (value) => value !== genre
-                    //             )
-                    //           )
-                    //       }}
-                    //     />
-                    //   </FormControl>
-                    //   <FormLabel className="py-1 px-3 m-1 justify-center text-base font-serif italic font-light">
-                    //     {genre}
-                    //   </FormLabel>
-                    // </FormItem>
                   )
                 }}
               />

@@ -1,0 +1,23 @@
+services:
+  db:
+    image: postgres
+    restart: always
+    # environment:
+    #   - PGUSER=postgres
+    #   - POSTGRES_USER=dbuser
+    #   - POSTGRES_PASSWORD=qwer1234
+    #   - POSTGRES_DB=buchklub-db
+    env_file: "./environment.env"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready"]
+      interval: 1s
+      timeout: 5s
+      retries: 10
+    ports:
+      - 5432:5432
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
