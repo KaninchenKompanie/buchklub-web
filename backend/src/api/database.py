@@ -52,7 +52,10 @@ def create_mock_data():
         b3 = Book(name="Picture of Dorian Grey", author="Robert Deibel", genre=["porn"], year=1999)
         books = [b,b1,b2,b3]
         for book in books:
-            write_to_db(Book,book,s)
+            try:
+                write_to_db(Book,book,s)
+            except:
+                print("gibt's schon")
         u = User(name="Robert",hashed_password=password.hash("robert"))
         u1 = User(name="Leo", hashed_password=password.hash("leo"))
         u2 = User(name="Inge", hashed_password=password.hash("inge"))
@@ -60,7 +63,10 @@ def create_mock_data():
         u4 = User(name="Denise", hashed_password=password.hash("pipikaka2"))
         users = [u, u1, u2, u3, u4]
         for user in users:
-            write_to_db(User,user,s)
+            try:
+                write_to_db(User,user,s)
+            except:
+                print("gibt's schon")
         uid = s.exec(select(User).where(User.name == u.name)).first()[0].id
         u1id = s.exec(select(User).where(User.name == u1.name)).first()[0].id
         u2id = s.exec(select(User).where(User.name == u2.name)).first()[0].id
@@ -74,7 +80,10 @@ def create_mock_data():
             r3b = Rating(book_id=bid, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             ratings = [rb, r1b, r2b, r3b]
             for rating in ratings:
-                write_to_db(Rating,rating,s)
+                try:    
+                    write_to_db(Rating,rating,s)
+                except:
+                    print("gibt's schon")
         b1id = s.exec(select(Book).where(Book.name == b1.name)).first()[0].id
         if b1id and uid and u1id and u2id and u3id and u4id:
             rb1 = Rating(book_id=b1id, user_id=uid, setting=2, plot=3, engagement=4, characters=5, style=6, recommend=True, comment="")
@@ -86,7 +95,10 @@ def create_mock_data():
             print("Rating name", name)
             ratings = [rb1, r1b1, r2b1, r3b1, r4b1]
             for rating in ratings:
-                write_to_db(Rating,rating,s)
+                try:
+                    write_to_db(Rating,rating,s)
+                except:
+                    print("gibt's schon")
         b2id = s.exec(select(Book).where(Book.name == b2.name)).first()[0].id
         if b2id and uid and u1id and u2id:
             rb2 = Rating(book_id=b2id, user_id=uid, setting=6, plot=1, engagement=5, characters=7, style=1, recommend=False, comment="")
@@ -94,4 +106,7 @@ def create_mock_data():
             r2b2 = Rating(book_id=b2id, user_id=u2id, setting=6, plot=1, engagement=6, characters=1, style=1, recommend=False, comment="")
             ratings = [rb2, r1b2, r2b2]
             for rating in ratings:
-                write_to_db(Rating,rating,s)
+                try:
+                    write_to_db(Rating,rating,s)
+                except:
+                    print("gibt's schon")
