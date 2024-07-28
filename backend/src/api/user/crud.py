@@ -7,7 +7,7 @@ from api.auth.auth_handler import sign_jwt
 from api.auth.password import hash
 
 
-def new_user(user: UserCreate, s: Session = Depends(get_session)):
+def create_user(user: UserCreate, s: Session = Depends(get_session)):
     data = {"hashed_password": hash(user.password)}
     db_user = User.model_validate(user, update=data)
     return write_to_db(User, db_user,s)
