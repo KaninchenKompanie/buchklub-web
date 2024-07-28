@@ -28,7 +28,11 @@ def compute_average_categories(book_id, s: Session):
         .group_by(Rating.book_id)
     ).all()
 
-    average_ratings_per_book = float(sum(count for _, count in book_rating_counts) / len(book_rating_counts))
+
+    print("rating statistics: ", sum(count for _, count in book_rating_counts), len(book_rating_counts))
+    
+
+    average_ratings_per_book = float(sum(count for _, count in book_rating_counts) / 1)
 
 
     # Compute Bayesian average for the specified book
@@ -67,7 +71,7 @@ def find_best_books(s: Session):
         .group_by(Rating.book_id)
     ).all()
 
-    average_ratings_per_book = sum(count for _, count in book_rating_counts) / len(book_rating_counts)
+    average_ratings_per_book = sum(count for _, count in book_rating_counts) / 1
 
 
     for book in books:
