@@ -27,16 +27,17 @@ export default function Shelf() {
       <div className="ml-auto mb-10">
         <AddBook />
       </div>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pb-10">
         Bücherregal
       </h1>
       <Table>
-        <TableHeader>
+        <TableHeader className="h-[60px]">
           <TableRow>
-            <TableHead> Name </TableHead>
-            <TableHead> Author </TableHead>
-            <TableHead> Genre </TableHead>
-            <TableHead> Rating </TableHead>
+            <TableHead className="text-xl font-thin"> Buchtitel </TableHead>
+            <TableHead className="text-xl font-thin"> Autor </TableHead>
+            <TableHead className="text-xl font-thin"> Genre </TableHead>
+            <TableHead className="text-xl font-thin"> Jahr </TableHead>
+            <TableHead className="text-xl font-thin"> Bewertung </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,6 +46,7 @@ export default function Shelf() {
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
               <TableCell> {book.genre} </TableCell>
+              <TableCell> {book.year} </TableCell>
               <TableCell>
                 <Rating value={book.rating ?? 0} />
               </TableCell>
@@ -66,9 +68,42 @@ export default function Shelf() {
           ))}
         </TableBody>
       </Table>
-      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl">
+      <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl pt-20 pb-10">
         Bibliothek
       </h1>
+      {/* <Table>
+        <TableHeader className="h-[60px]">
+          <TableRow>
+            <TableHead className="text-xl font-thin"> Buchtitel </TableHead>
+            <TableHead className="text-xl font-thin"> Autor </TableHead>
+            <TableHead className="text-xl font-thin"> Genre </TableHead>
+            <TableHead className="text-xl font-thin"> Jahr </TableHead>
+            <TableHead className="text-xl font-thin"> Bewertung </TableHead>
+          </TableRow>
+        </TableHeader>
+        <TableBody>
+          {books.map((book, index) => (
+            <TableRow key={index}>
+              <TableCell key={index}> {book.name} </TableCell>
+              <TableCell> {book.author} </TableCell>
+              <TableCell> {book.genre} </TableCell>
+              <TableCell> {book.year} </TableCell>
+              <TableCell>
+                <Rating value={book.rating ?? 0} />
+              </TableCell>
+              <TableCell>
+                <GoCommentDiscussion />
+              </TableCell>
+              <TableCell>
+                <RateBook />
+              </TableCell>
+              <TableCell>
+                <BookInfo id={0} />
+              </TableCell>
+            </TableRow>
+          ))}
+        </TableBody>
+      </Table> */}
     </div>
   );
 }

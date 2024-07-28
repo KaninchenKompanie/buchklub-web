@@ -1,9 +1,11 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from sqlalchemy import select
 from sqlmodel import create_engine, Session, SQLModel
 from api.book.model import Book
 from api.rating.model import Rating
 from api.user.model import User
+
+
 
 engine = None
 
@@ -14,10 +16,20 @@ config = {
 }
 
 db_name = "buchklub-db"
-db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}/{db_name}"
-engine = create_engine(db_url, echo=True)
+#db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}/{db_name}?client_encoding=utf"
+db_url = "postgresql://postgres:qwer1234@localhost:5433/buchklub-db"
+
+engine = create_engine(db_url, echo=True)#, connect_args={'options': '-c client_encoding=utf8'})
+
+import sys
+import locale
+
+print(f"Default encoding: {sys.getdefaultencoding()}")
+print(f"file system encoding: {sys.getfilesystemencoding()}")
+print(f"locale encoding: {locale.getpreferredencoding()}")
 
 def create_db_and_tables():
+    print(db_url)
     SQLModel.metadata.create_all(engine)
 
 def get_session():
@@ -25,26 +37,30 @@ def get_session():
         yield s
 
 def write_to_db(Field, data,s:Session=Depends(get_session)):
-    print("this is the data to write in the db: ", data)
     if not Field.__name__ == "Rating":
         existing_data = s.exec(select(Field).where(Field.name == data.name)).first()
         if not existing_data:
+            data = Field.model_validate(data)
             s.add(data)
             s.commit()
             s.refresh(data)
+        else:
+            raise HTTPException(status_code=409, detail=f"{data.name} existiert bereits!")
     else: 
-        print("adding ratings to the database")
+        data = Field.model_validate(data)
         s.add(data)
         s.commit()
         s.refresh(data)
+    return data
 
 
 def create_mock_data():
+    
     with Session(engine) as s:
-        b = Book(name="Frankenstein", author="Mary Shelly", genre="Horror",year=1818)
-        b1 = Book(name="Die unendliche Geschichte", author="Michael Ende", genre="Fantasy",year=2005)
-        b2 = Book(name="Life of Pi", author="Yann Martel", genre="Dokumentation", year=2030)
-        b3 = Book(name="Picture of Dorian Grey", author="Robert Deibel", genre="porn", year=1999)
+        b = Book(name="Frankenstein", author="Mary Shelly", genre=["Horror"],year=1818)
+        b1 = Book(name="Die unendliche Geschichte", author="Michael Ende", genre=["Fantasy"],year=2005)
+        b2 = Book(name="Life of Pi", author="Yann Martel", genre=["Dokumentation"], year=2030)
+        b3 = Book(name="Picture of Dorian Grey", author="Robert Deibel", genre=["porn"], year=1999)
         books = [b,b1,b2,b3]
         for book in books:
             write_to_db(Book,book,s)
