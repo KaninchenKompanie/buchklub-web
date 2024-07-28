@@ -63,8 +63,8 @@ def create_mock_data():
         u4id = s.exec(select(User).where(User.name == u4.name)).first()[0].id
         bid = s.exec(select(Book).where(Book.name == b.name)).first()[0].id
         if bid and uid and u1id and u2id and u3id:
-            rb = Rating(book_id=bid, user_id=uid, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
-            r1b = Rating(book_id=bid, user_id=u1id, setting=1, plot=7, engagement=7, characters=7, style=7, recommend=True, comment="")
+            rb = Rating(book_id=bid, user_id=uid, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="awesome")
+            r1b = Rating(book_id=bid, user_id=u1id, setting=1, plot=7, engagement=7, characters=7, style=7, recommend=True, comment="sucked")
             r2b = Rating(book_id=bid, user_id=u2id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             r3b = Rating(book_id=bid, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             ratings = [rb, r1b, r2b, r3b]
@@ -75,7 +75,7 @@ def create_mock_data():
             rb1 = Rating(book_id=b1id, user_id=uid, setting=2, plot=3, engagement=4, characters=5, style=6, recommend=True, comment="")
             r1b1 = Rating(book_id=b1id, user_id=u1id, setting=2, plot=3, engagement=7, characters=4, style=7, recommend=True, comment="")
             r2b1 = Rating(book_id=b1id, user_id=u2id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=True, comment="")
-            r3b1= Rating(book_id=b1id, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
+            r3b1= Rating(book_id=b1id, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="okay")
             r4b1 = Rating(book_id=b1id, user_id=u4id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             name = Rating.__name__
             print("Rating name", name)
