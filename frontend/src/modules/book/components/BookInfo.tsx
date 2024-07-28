@@ -1,18 +1,14 @@
 import { Button } from "@/components/ui/button";
 import {
   Sheet,
-  SheetClose,
   SheetContent,
   SheetDescription,
-  SheetFooter,
   SheetHeader,
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useEffect, useState } from "react";
 import { Book } from "../configurations/types";
-import RecommendationDistribution from "./RecommendationDistribution";
-import AverageRatingCategory from "./AverageRatingCategory";
 import { Badge } from "@/components/ui/badge";
 import Rating from "@/modules/common/components/Rating";
 import AverageRatingCategoryBook from "./AverageRatingCategoryBook";

@@ -26,41 +26,68 @@ export function mapBooksStatsDtoToBookStats(
         bookStatsDto.best_books_per_category.style
       ),
     },
-    bestSingleBook: {
-      book: bookStatsDto.single_best_book.book,
-      percentiles: {
-        medianPercentile:
-          bookStatsDto.single_best_book.percentiles.median_percentile,
-        setting: bookStatsDto.single_best_book.percentiles.setting,
-        plot: bookStatsDto.single_best_book.percentiles.plot,
-        engagement: bookStatsDto.single_best_book.percentiles.engagement,
-        characters: bookStatsDto.single_best_book.percentiles.characters,
-        style: bookStatsDto.single_best_book.percentiles.style,
+    mostLikedBook: {
+      book: bookStatsDto.most_liked_book.book || "",
+      bayesianAverages: {
+        setting: bookStatsDto.most_liked_book.bayesian_averages.setting || 0,
+        plot: bookStatsDto.most_liked_book.bayesian_averages.plot || 0,
+        engagement:
+          bookStatsDto.most_liked_book.bayesian_averages.engagement || 0,
+        characters:
+          bookStatsDto.most_liked_book.bayesian_averages.characters || 0,
+        style: bookStatsDto.most_liked_book.bayesian_averages.style || 0,
+        recommendPercentage:
+          bookStatsDto.most_liked_book.bayesian_averages
+            .recommended_percentage || 0,
+        totalAverageRating:
+          bookStatsDto.most_liked_book.bayesian_averages.total_average_rating ||
+          0,
       },
     },
-    worstBook: {
-      book: bookStatsDto.worst_book.book,
-      percentiles: {
-        medianPercentile: bookStatsDto.worst_book.percentiles.median_percentile,
-        setting: bookStatsDto.worst_book.percentiles.setting,
-        plot: bookStatsDto.worst_book.percentiles.plot,
-        engagement: bookStatsDto.worst_book.percentiles.engagement,
-        characters: bookStatsDto.worst_book.percentiles.characters,
-        style: bookStatsDto.worst_book.percentiles.style,
+    lessLikedBook: {
+      book: bookStatsDto.less_liked_book.book || "",
+      bayesianAverages: {
+        setting: bookStatsDto.less_liked_book.bayesian_averages.setting || 0,
+        plot: bookStatsDto.less_liked_book.bayesian_averages.plot || 0,
+        engagement:
+          bookStatsDto.less_liked_book.bayesian_averages.engagement || 0,
+        characters:
+          bookStatsDto.less_liked_book.bayesian_averages.characters || 0,
+        style: bookStatsDto.less_liked_book.bayesian_averages.style || 0,
+        recommendPercentage:
+          bookStatsDto.less_liked_book.bayesian_averages
+            .recommended_percentage || 0,
+        totalAverageRating:
+          bookStatsDto.less_liked_book.bayesian_averages.total_average_rating ||
+          0,
       },
     },
     mostControversialBook: {
-      book: bookStatsDto.most_controversial_book.book,
-      percentiles: {
-        medianPercentile:
-          bookStatsDto.most_controversial_book.percentiles.median_percentile,
-        setting: bookStatsDto.most_controversial_book.percentiles.setting,
-        plot: bookStatsDto.most_controversial_book.percentiles.plot,
-        engagement: bookStatsDto.most_controversial_book.percentiles.engagement,
-        characters: bookStatsDto.most_controversial_book.percentiles.characters,
-        style: bookStatsDto.most_controversial_book.percentiles.style,
+      book: bookStatsDto.most_controversial_book.book || "",
+      standardDeviation: {
+        setting: bookStatsDto.less_liked_book.bayesian_averages.setting || 0,
+        plot: bookStatsDto.less_liked_book.bayesian_averages.plot || 0,
+        engagement:
+          bookStatsDto.less_liked_book.bayesian_averages.engagement || 0,
+        characters:
+          bookStatsDto.less_liked_book.bayesian_averages.characters || 0,
+        style: bookStatsDto.less_liked_book.bayesian_averages.style || 0,
       },
+      recommendPercentage:
+        bookStatsDto.most_controversial_book.recommend_percentage || 0,
     },
+    bookStats: bookStatsDto.book_stats.map((bookStat) => ({
+      setting: bookStat.setting || 0,
+      plot: bookStat.plot || 0,
+      engagement: bookStat.engagement || 0,
+      characters: bookStat.characters || 0,
+      style: bookStat.style || 0,
+      recommendPercentage: bookStat.recommend_percentage || 0,
+      totalAverageRating: bookStat.total_average_rating || 0,
+      bookId: bookStat.book_id || "",
+      bookName: bookStat.book_name || "",
+      ratingCount: bookStat.rating_count || 0,
+    })),
   };
 }
 
@@ -68,8 +95,8 @@ function mapBookBayesianSettingDtoToBookBayesianSetting(
   bookBayesianSettingDto: BookBayesianSettingDto
 ): BookBayesianSetting {
   return {
-    book: bookBayesianSettingDto.Book,
-    bayesianSetting: bookBayesianSettingDto.Bayesian_plot,
-    userCount: bookBayesianSettingDto["User Count"],
+    book: bookBayesianSettingDto.Book || "",
+    bayesianSetting: bookBayesianSettingDto.Bayesian_plot || 0,
+    userCount: bookBayesianSettingDto["User Count"] || 0,
   };
 }

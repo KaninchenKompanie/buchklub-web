@@ -19,33 +19,39 @@ export type BooksStats = {
     characters: BookBayesianSetting;
     style: BookBayesianSetting;
   };
-  bestSingleBook: {
+  mostLikedBook: {
     book: string;
-    percentiles: {
-      medianPercentile: number;
-    } & BookRatings;
+    bayesianAverages: BookRatingExtended;
+  };
+  lessLikedBook: {
+    book: string;
+    bayesianAverages: BookRatingExtended;
   };
   mostControversialBook: {
     book: string;
-    percentiles: {
-      medianPercentile: number;
-    } & BookRatings;
+    standardDeviation: BookRatingBasic;
+    recommendPercentage: number;
   };
-  worstBook: {
-    book: string;
-    percentiles: {
-      medianPercentile: number;
-    } & BookRatings;
-  };
+  bookStats: BookStatMeta[];
 };
 
-export type BookRatings = {
+export type BookRatingBasic = {
   setting: number;
   plot: number;
   engagement: number;
   characters: number;
   style: number;
 };
+
+export type BookRatingExtended = {
+  totalAverageRating: number;
+  recommendPercentage: number;
+} & BookRatingBasic;
+
+export type BookRatingExtendedDto = {
+  total_average_rating: number;
+  recommended_percentage: number;
+} & BookRatingBasic;
 
 export type BookBayesianSetting = {
   book: string;
@@ -60,26 +66,41 @@ export type BooksStatsDto = {
     engagement: BookBayesianSettingDto;
     characters: BookBayesianSettingDto;
     style: BookBayesianSettingDto;
+    recommend: BookBayesianSettingDto;
+    total_average_rating: number;
+    recommend_percentage: number;
   };
-  single_best_book: {
+  most_liked_book: {
     book: string;
-    percentiles: {
-      median_percentile: number;
-    } & BookRatings;
+    bayesian_averages: BookRatingExtendedDto;
+  };
+  less_liked_book: {
+    book: string;
+    bayesian_averages: BookRatingExtendedDto;
   };
   most_controversial_book: {
     book: string;
-    percentiles: {
-      median_percentile: number;
-    } & BookRatings;
+    standard_deviation: BookRatingBasic;
+    recommend_percentage: number;
   };
-  worst_book: {
-    book: string;
-    percentiles: {
-      median_percentile: number;
-    } & BookRatings;
-  };
+  book_stats: BookStatMetaDto[];
 };
+
+export type BookStatMetaDto = {
+  recommend_percentage: number;
+  total_average_rating: number;
+  book_id: string;
+  book_name: string;
+  rating_count: number;
+} & BookRatingBasic;
+
+export type BookStatMeta = {
+  recommendPercentage: number;
+  totalAverageRating: number;
+  bookId: string;
+  bookName: string;
+  ratingCount: number;
+} & BookRatingBasic;
 
 export type BookBayesianSettingDto = {
   Book: string;
