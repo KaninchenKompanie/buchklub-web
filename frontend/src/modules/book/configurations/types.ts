@@ -108,6 +108,13 @@ export type BookBayesianSettingDto = {
   "User Count": number;
 };
 
+export type CreateBookReview = {
+  bookId: number;
+  userId: number;
+  recommend: boolean;
+  comment: string;
+} & BookRatingBasic;
+
 export type BookReviewsDto = {
   id: number;
   book_id: number;

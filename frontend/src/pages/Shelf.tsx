@@ -54,7 +54,8 @@ export default function Shelf() {
                 <GoCommentDiscussion />
               </TableCell>
               <TableCell>
-                <RateBook />
+                <RateBook
+                id={book.id} />
               </TableCell>
               <TableCell>
                 <BookInfo

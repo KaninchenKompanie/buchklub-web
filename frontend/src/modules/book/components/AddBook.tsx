@@ -43,7 +43,6 @@ export default function AddBook() {
   });
 
   function onSubmit(values: z.infer<typeof bookSchema>) {
-    console.log(values);
     let book: CreateBook = {
       name: values.name,
       author: values.author,
