@@ -4,7 +4,7 @@ import { jwtDecode } from "jwt-decode";
 
 export function getUserDataFromAcessToken(): User | null {
   const token = getAccessTokenFromStorage();
-  if (!token) throw "Do not use this function if user is not authenticated";
+  if (!token) return null;
 
   const decoded = jwtDecode(token) as TokenContent;
 
