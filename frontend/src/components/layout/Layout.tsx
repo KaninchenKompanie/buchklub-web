@@ -3,7 +3,7 @@ import { Sidebar } from "./Sidebar";
 
 export default function Layout({ children }: { children: ReactNode }) {
   return (
-    <div className={"h-[100vh] w-[100vw] bg-background flex"}>
+    <div className={"h-[100vh] w-[calc(100vw-53px)] bg-background flex"}>
       <Sidebar />
       {/* NOTE: temp fix: custom ml left to prevent content overflow with sidebar */}
       <main className={"flex-1 h-full ml-[53px]"}>{children}</main>
