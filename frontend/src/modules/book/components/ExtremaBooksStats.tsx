@@ -22,7 +22,8 @@ export default function ExtremaBooksStats({
         )}
         labelKey={"label"}
         valueKey={"value"}
-        description={booksStats.mostLikedBook.book}
+        description={"base average"}
+        footer={booksStats.mostLikedBook.book}
       />
       <RadarChartCard
         className="flex-1"
@@ -32,7 +33,8 @@ export default function ExtremaBooksStats({
         )}
         labelKey={"label"}
         valueKey={"value"}
-        description={booksStats.lessLikedBook.book}
+        description={"base average"}
+        footer={booksStats.lessLikedBook.book}
       />
       <RadarChartCard
         className="flex-1"
@@ -42,7 +44,8 @@ export default function ExtremaBooksStats({
         )}
         labelKey={"label"}
         valueKey={"value"}
-        description={booksStats.mostControversialBook.book}
+        description={"standard deviation"}
+        footer={booksStats.mostControversialBook.book}
       />
     </div>
   );
