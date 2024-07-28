@@ -23,20 +23,32 @@ import {
 import { bookSchema } from "../configurations/schemas";
 import { Toggle } from "@/components/ui/toggle";
 import { Textarea } from "@/components/ui/textarea";
+import { newBook } from "../api";
+import { CreateBook } from "../configurations/types";
 
 export default function AddBook() {
 
   const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
     defaultValues: {
-      name: "",
+      name: "grosser Prinz",
+      author: "Döner",
+      year: 2021,
       genre: [],
+      description: "Ein Buch über einen grossen Prinzen"
     },
   });
 
   function onSubmit(values: z.infer<typeof bookSchema>) {
     console.log(values);
-    
+    let book: CreateBook = {
+      name: values.name,
+      author: values.author,
+      year: values.year,
+      genre: values.genre,
+      description: values.description
+    }
+    newBook(book);
   }
 
   const inputFields = (name: any, label: string, props?:any) => {
