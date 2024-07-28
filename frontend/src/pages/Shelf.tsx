@@ -33,10 +33,11 @@ export default function Shelf() {
       <Table>
         <TableHeader>
           <TableRow>
-            <TableHead> Name </TableHead>
-            <TableHead> Author </TableHead>
+            <TableHead> Buchtitel </TableHead>
+            <TableHead> Autor </TableHead>
             <TableHead> Genre </TableHead>
-            <TableHead> Rating </TableHead>
+            <TableHead> Jahr </TableHead>
+            <TableHead> Bewertung </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -45,6 +46,7 @@ export default function Shelf() {
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
               <TableCell> {book.genre} </TableCell>
+              <TableCell> {book.year} </TableCell>
               <TableCell>
                 <Rating value={book.rating ?? 0} />
               </TableCell>

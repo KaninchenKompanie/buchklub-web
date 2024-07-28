@@ -21,10 +21,8 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { bookSchema } from "../configurations/schemas";
-import { ReactElement } from "react";
 import { Toggle } from "@/components/ui/toggle";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 
 export default function AddBook() {
 
@@ -38,7 +36,7 @@ export default function AddBook() {
 
   function onSubmit(values: z.infer<typeof bookSchema>) {
     console.log(values);
-    console.log("hallo");
+    
   }
 
   const inputFields = (name: any, label: string, props?:any) => {
@@ -113,9 +111,7 @@ export default function AddBook() {
                     <Toggle
                       className="py-1 px-3 m-1 justify-center text-base font-serif italic font-light border data-[state=on]:border-primary"
                       onClick={() => {
-                        console.log(field)
                         let checked = field.value?.includes(genre)
-                        console.log(checked)
                         if (checked){
                           return field.onChange(
                             field.value?.filter(
@@ -157,7 +153,7 @@ export default function AddBook() {
             </DialogHeader>
             {inputFields("name", "Buchtitel")}
             {inputFields("author", "Autor des Buches")}
-            {inputFields("year", "Jahr der Veröffentlichung", {valueasnumber: true})}
+            {inputFields("year", "Jahr der Veröffentlichung")}
             {showGenres()}
             {textFields()}
             <Button className="mt-8" type="submit">Buch hinzufügen</Button>
