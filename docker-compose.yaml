@@ -44,7 +44,7 @@ services:
     #   - traefik.http.services.${STACK_NAME?Variable not set}-adminer.loadbalancer.server.port=8080
 
   backend:
-    image: '${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}'
+    image: "${DOCKER_IMAGE_BACKEND?Variable not set}:${TAG-latest}"
     restart: always
     networks:
       # - traefik-public
@@ -104,7 +104,7 @@ services:
     #   - traefik.http.routers.${STACK_NAME?Variable not set}-backend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect
 
   frontend:
-    image: '${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}'
+    image: "${DOCKER_IMAGE_FRONTEND?Variable not set}:${TAG-latest}"
     restart: always
     networks:
       # - traefik-public
@@ -113,7 +113,7 @@ services:
       context: ./frontend
       args:
         # - VITE_API_URL=https://${DOMAIN?Variable not set}
-        - VITE_API_URL=https://localhost:4200
+        - VITE_API_URL=http://localhost:4200
         - NODE_ENV=production
     ports:
       - 8000:80
@@ -137,8 +137,7 @@ services:
     #   - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.middlewares=https-redirect,${STACK_NAME?Variable not set}-www-redirect
 volumes:
   buchklub-db-data:
-
 # networks:
-  # traefik-public:
-  #   # Allow setting it to false for testing
-  #   external: true
+# traefik-public:
+#   # Allow setting it to false for testing
+#   external: true
