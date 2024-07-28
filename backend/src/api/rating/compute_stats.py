@@ -105,31 +105,47 @@ def find_best_and_worst_book(book_bayesian_avgs):
     return best_book, percentiles.loc[best_book], worst_book, percentiles.loc[worst_book]
 
 
-def find_most_controversial_book(book_standard_deviations):
-    # Identify the book with the highest standard deviation
-    most_controversial_book = max(book_standard_deviations, key=book_standard_deviations.get)
-    return most_controversial_book, book_standard_deviations[most_controversial_book]
+def find_most_controversial_book(book_standard_deviations, s: Session):
+    # Identify the book title with the highest standard deviation
+    most_controversial_book_title = max(book_standard_deviations, key=book_standard_deviations.get)
+    
+    # Retrieve the book ID for the most controversial book title
+    most_controversial_book_id = s.exec(select(Book.id).where(Book.name == most_controversial_book_title)).one()
+    
+    # Calculate standard deviations for all categories for the most controversial book
+    ratings = s.exec(select(Rating).where(Rating.book_id == most_controversial_book_id)).all()
+    
+    sd_values = {
+        "setting": np.std([r.setting for r in ratings]),
+        "plot": np.std([r.plot for r in ratings]),
+        "engagement": np.std([r.engagement for r in ratings]),
+        "characters": np.std([r.characters for r in ratings]),
+        "style": np.std([r.style for r in ratings]),
+    }
+    
+    return most_controversial_book_title, sd_values
+
 
 def get_book_statistics(s: Session) -> Dict[str, Any]:
     best_books, book_bayesian_avgs, book_standard_deviations = find_best_books(s=s)
     
     single_best_book, best_percentiles, single_worst_book, worst_percentiles = find_best_and_worst_book(book_bayesian_avgs)
     
-    most_controversial_book, std_dev = find_most_controversial_book(book_standard_deviations)
+    most_controversial_book, sd_values = find_most_controversial_book(book_standard_deviations, s)
     
     return {
-            "best_books_per_category": best_books,
-            "single_best_book": {
-                "book": single_best_book,
-                "percentiles": best_percentiles.to_dict()
-            },
-            "single_worst_book": {
-                "book": single_worst_book,
-                "percentiles": worst_percentiles.to_dict()
-            },
-            "most_controversial_book": {
-                "book": most_controversial_book,
-                "standard_deviation": std_dev
-            }
+        "best_books_per_category": best_books,
+        "single_best_book": {
+            "book": single_best_book,
+            "percentiles": best_percentiles.to_dict()
+        },
+        "single_worst_book": {
+            "book": single_worst_book,
+            "percentiles": worst_percentiles.to_dict()
+        },
+        "most_controversial_book": {
+            "book": most_controversial_book,
+            "standard_deviation": sd_values
         }
+    }
 
