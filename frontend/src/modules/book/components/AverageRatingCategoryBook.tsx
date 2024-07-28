@@ -1,22 +1,29 @@
-import React from 'react'
-import AverageRatingCategory from './AverageRatingCategory'
+import useBooksStats from '../hooks/useBooksStats';
+import { RadarChartCard } from '@/modules/common/components/RadarChartCard';
 
 type AverageRatingCategoryBookProps = {
     id: number;
 }
 
 export default function AverageRatingCategoryBook({ id }: AverageRatingCategoryBookProps) {
+  const { booksStats } = useBooksStats();
+  const stats = booksStats?.bookStats.find(item => item.bookId == id);   
+  
+  if (!stats) return <div>no stats</div>
+
   return (
-    <AverageRatingCategory
-        title="Durchschnittliche Bewertung der Kategorien"
-        description={"Anzahl Bewertungen: " + 42}
-        data={[
-          { category: "setting", rating: 4 },
-          { category: "plot", rating: 4 },
-          { category: "engagement", rating: 7 },
-          { category: "characters", rating: 2 },
-          { category: "style", rating: 7 },
-        ]}
-      />
+    <RadarChartCard
+      data={[
+        { category: "setting", rating: stats.setting },
+        { category: "plot", rating: stats.plot },
+        { category: "engagement", rating: stats.engagement },
+        { category: "characters", rating: stats.characters  },
+        { category: "style", rating: stats.style  },
+      ]}
+      labelKey="category"
+      valueKey="rating"
+      title="Durchschnittliche Bewertung der Kategorien"
+      description={`Anzahl an Bewertungen: ${stats.ratingCount}`}
+    />
   )
 }

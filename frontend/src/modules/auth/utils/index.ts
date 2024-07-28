@@ -1,12 +1,14 @@
 import { localStorageTokenKeys } from "../constants";
-import { User } from "../types";
+import { TokenContent, User } from "../types";
+import { jwtDecode } from "jwt-decode";
 
 export function getUserDataFromAcessToken(): User | null {
-  // const token = getAccessTokenFromStorage();
-  // if (!token) return null;
+  const token = getAccessTokenFromStorage();
+  if (!token) throw "Do not use this function if user is not authenticated";
 
-  // TODO decode token correctly
-  return { name: "John Doe" };
+  const decoded = jwtDecode(token) as TokenContent;
+
+  return { name: decoded.name };
 }
 
 export function getAccessTokenFromStorage(): string | null {
