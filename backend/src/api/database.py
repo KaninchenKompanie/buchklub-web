@@ -12,14 +12,14 @@ engine = None
 config = {
     "db-user": "postgres",
     "db-pass": "qwer1234",
-    "db-network": "localhost"
+    "db-network": "localhost",
+    "db-port": 5433
 }
 
 db_name = "buchklub-db"
-#db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}/{db_name}?client_encoding=utf"
-db_url = "postgresql://postgres:qwer1234@localhost:5433/buchklub-db"
+db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}:{config['db-port']}/{db_name}"
 
-engine = create_engine(db_url, echo=True)#, connect_args={'options': '-c client_encoding=utf8'})
+engine = create_engine(db_url, echo=True)
 
 import sys
 import locale
