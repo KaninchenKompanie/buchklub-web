@@ -5,19 +5,21 @@ from api.rating.model import Rating
 from api.user.model import User
 from api.auth import password
 
+import os
+
 engine = None
 
-config = {
-    "db-user": "postgres",
-    "db-pass": "qwer1234",
-    "db-network": "localhost"
-}
+db_user = os.getenv("POSTGRES_USER", "postgres")
+db_pass = os.getenv("POSTGRES_PASSWORD", "qwer1234")
+db_network = os.getenv("POSTGRES_SERVER", "localhost")
 
-db_name = "buchklub-db"
-db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}/{db_name}"
+
+db_name = os.getenv("POSTGRES_DB", "localhost")
+db_url = f"postgresql://{db_user}:{db_pass}@{db_network}/{db_name}"
 engine = create_engine(db_url, echo=True)
 
 def create_db_and_tables():
+    print(db_url)
     SQLModel.metadata.create_all(engine)
 
 def get_session():
