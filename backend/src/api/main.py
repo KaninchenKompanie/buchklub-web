@@ -6,6 +6,9 @@ from fastapi.middleware.cors import CORSMiddleware
 from api.database import create_db_and_tables, create_mock_data
 from api import api
 
+import _locale
+_locale._getdefaultlocale = (lambda *args: ['en_US', 'utf8'])
+
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     create_db_and_tables()
@@ -30,14 +33,3 @@ def create_app() -> FastAPI:
     return app
 
 app = create_app()
-
-origins = [
-    "http://localhost:5173"
-]
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=origins, 
-    allow_credentials=True, 
-    allow_methods=["*"], 
-    allow_headers=["*"]
-)

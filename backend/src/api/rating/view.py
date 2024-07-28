@@ -5,7 +5,7 @@ from api.rating.crud import create_rating, delete_rating, read_rating, read_rati
 from api.database import get_session
 from api.rating.model import RatingBase
 
-from api.rating import compute_stats
+from api.rating import compute_stats, user_stats
 
 router = APIRouter()
 
@@ -29,4 +29,7 @@ def delete_rating(rating_id: int, s: Session = Depends(get_session)):
 def teststats(s: Session = Depends(get_session)):
     return compute_stats.get_book_statistics(s)
 
+@router.get("/stats/users/{user_id}")
+def userstats(user_id: int, s: Session = Depends(get_session)):
+    return user_stats.get_user_statistics(user_id, s)
 # @router.put("/ratings/")

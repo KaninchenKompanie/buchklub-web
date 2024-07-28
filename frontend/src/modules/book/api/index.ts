@@ -3,7 +3,7 @@ import {
   mapBookReviewsDtoToBookReviews,
   mapBooksStatsDtoToBookStats
 } from "../mappers";
-import { Book, BookReviews, BookReviewsDto, BooksStats } from "../configurations/types";
+import { Book, BookReviews, BookReviewsDto, BooksStats, CreateBook } from "../configurations/types";
 import { urlPaths } from "@/modules/common/configurations/constants";
 
 export async function fetchBooksStats(): Promise<BooksStats> {
@@ -13,6 +13,10 @@ export async function fetchBooksStats(): Promise<BooksStats> {
 
 export async function fetchBooks(): Promise<Book[]> {
   return (await axios.get(`${urlPaths.books}`)).data;
+}
+
+export async function newBook(book: CreateBook): Promise<Book[]> {
+  return (await axios.post(`${urlPaths.books}`, book));
 }
 
 export async function fetchReviews(): Promise<BookReviews[]> {
