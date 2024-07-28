@@ -4,7 +4,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from api.database import create_db_and_tables, create_mock_data
-from api import api
+from api import api, settings
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -15,9 +15,7 @@ async def lifespan(app: FastAPI):
 def create_app() -> FastAPI:
 
     app = FastAPI(lifespan=lifespan)
-    origins = [
-        "http://localhost:5173"
-    ]
+    origins = settings.ORIGINS
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins, 
