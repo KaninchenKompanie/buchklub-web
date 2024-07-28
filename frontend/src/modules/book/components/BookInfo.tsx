@@ -17,8 +17,6 @@ type BookInfoProps = {
 
 export default function BookInfo({ book }: BookInfoProps) {
   if (!book) return <div>error</div>
-
-  console.log(book.genre);
   
   return (
     <Sheet>
@@ -52,7 +50,13 @@ export default function BookInfo({ book }: BookInfoProps) {
           <p>XX% der LeserInnen empfehlen dieses Buch weiter.</p>
           <div>
             <p className="font-bold text-lg py-2">Rezensionen</p>
-            <Review />
+
+            <Review 
+              userName="Denise"
+              ratingAvg={5}
+              ratingCategories={{ setting: 2, plot: 5, engagement: 1, characters: 6, style: 1 }}
+              comment="hat mir gut gefallen"
+            />
           </div>
         </div>
       </SheetContent>
