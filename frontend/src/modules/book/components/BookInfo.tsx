@@ -1,7 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Book } from "../configurations/types";
 import Rating from "@/modules/common/components/Rating";
 import AverageRatingCategoryBook from "./AverageRatingCategoryBook";
@@ -13,8 +11,8 @@ type BookInfoProps = {
 };
 
 export default function BookInfo({ book }: BookInfoProps) {
-  if (!book) return <div>error</div>
-  
+  if (!book) return <div>error</div>;
+
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -39,10 +37,16 @@ export default function BookInfo({ book }: BookInfoProps) {
           <p>XX% der LeserInnen empfehlen dieses Buch weiter.</p>
           <div>
             <p className="font-bold text-lg py-2">Rezensionen</p>
-            <Review 
+            <Review
               userName="Denise"
               ratingAvg={5}
-              ratingCategories={{ setting: 2, plot: 5, engagement: 1, characters: 6, style: 1 }}
+              ratingCategories={{
+                setting: 2,
+                plot: 5,
+                engagement: 1,
+                characters: 6,
+                style: 1,
+              }}
               comment="hat mir gut gefallen"
             />
           </div>
