@@ -55,7 +55,12 @@ export default function Shelf() {
                 <RateBook />
               </TableCell>
               <TableCell>
-                <BookInfo id={0} />
+                
+
+                  <BookInfo 
+                    book={books.find(item => item.id == book.id)}
+                  />
+                
               </TableCell>
             </TableRow>
           ))}

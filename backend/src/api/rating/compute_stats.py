@@ -41,8 +41,8 @@ def compute_average_categories(book_id, s: Session):
 
     # Calculate the Bayesian average for recommendation
     sum_recommend = sum(r.recommend for r in book_ratings)
-    bayesian_recommend_avg = (float(sum_recommend) + (average_ratings_per_book * float(overall_means.recommend))) / (total_ratings + average_ratings_per_book)
-    bayesian_avgs['recommend'] = bayesian_recommend_avg * 100  # Convert to percentage
+    #bayesian_recommend_avg = (float(sum_recommend) + (average_ratings_per_book * float(overall_means.recommend))) / (total_ratings + average_ratings_per_book)
+    #bayesian_avgs['recommend'] = bayesian_recommend_avg * 100  # Convert to percentage
     bayesian_avgs['total_average_rating'] = np.mean([bayesian_avgs[category] for category in ['setting', 'plot', 'engagement', 'characters', 'style']])
     return bayesian_avgs
 
@@ -62,10 +62,12 @@ def get_all_books_statistics(s: Session):
     for book in books:
         book_stats = compute_average_categories(book.id, s)
         if book_stats:
+            recommend_percentage = get_recommendation_percentage(book.id, s)
             book_stats.update({
                 'book_id': book.id,
                 'book_name': book.name,
-                'rating_count': len(s.exec(select(Rating).where(Rating.book_id == book.id)).all())
+                'rating_count': len(s.exec(select(Rating).where(Rating.book_id == book.id)).all()),
+                'recommend_percentage': recommend_percentage  # Add recommendation percentage here
             })
             all_books_stats.append(book_stats)
     

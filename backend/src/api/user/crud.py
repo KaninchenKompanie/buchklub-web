@@ -2,18 +2,15 @@ from fastapi import Depends, HTTPException
 from sqlmodel import Session, select
 
 from api.user.model import UserCreate, User, UserPublic
-from api.database import get_session
+from api.database import get_session, write_to_db
 from api.auth.auth_handler import sign_jwt
 from api.auth.password import hash
 
 
-def new_user(user: UserCreate, s: Session = Depends(get_session)):
+def create_user(user: UserCreate, s: Session = Depends(get_session)):
     data = {"hashed_password": hash(user.password)}
     db_user = User.model_validate(user, update=data)
-    s.add(db_user)
-    s.commit()
-    s.refresh(db_user)
-    return sign_jwt(db_user.id)
+    return write_to_db(User, db_user,s)
 
 def validate_user(user: UserCreate, s: Session = Depends(get_session)):
     try:
