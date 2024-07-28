@@ -5,13 +5,13 @@ from fastapi import APIRouter, Depends
 
 from sqlmodel import Session, select
 
-from api.book.model import Book, BookPublic, BookCreate
+from api.book.model import Book, BookPublic, BookBase
 from api.database import get_session
 
 router = APIRouter()
 
 @router.post("/", response_model=BookPublic)
-def new_book(book: Book, s: Session = Depends(get_session)):
+def new_book(book: BookBase, s: Session = Depends(get_session)):
     return create_book(book, s)
 
 @router.get("/", response_model=List[BookPublic])

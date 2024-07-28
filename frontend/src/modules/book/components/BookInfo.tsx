@@ -1,12 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetContent,
-  SheetDescription,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetDescription, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Book } from "../configurations/types";
 import Rating from "@/modules/common/components/Rating";
 import AverageRatingCategoryBook from "./AverageRatingCategoryBook";
@@ -28,21 +21,13 @@ export default function BookInfo({ book }: BookInfoProps) {
       <SheetContent className="sm:max-w-[600px] overflow-y-auto">
         <SheetHeader>
           <SheetTitle>{book?.name}</SheetTitle>
-          <SheetDescription>
-            <div className="py-2">
-              {book.author} [{book.year}]<br />
-            </div>
-            <div className="flex gap-2 py-2">
-              {/* {book.genre?.map((genre, index) => (
-                <Badge key={index}>{genre}</Badge>
-              ))} */}
-              <Badge>GENRE</Badge>
-            </div>
-            <div className="flex flex-col py-2">
-              <div className="font-bold">Beschreibung</div>
-              <p>{book.description}</p>
-            </div>
-          </SheetDescription>
+            <span className="py-2">{book.author} [{book.year}]</span>
+            <Badge className="py-2 w-max">GENRE</Badge>
+            <span className="flex flex-col gap-1 py-2">
+              <span className="font-bold">Beschreibung</span>
+              <span>{book.description}</span>
+            </span>
+          <SheetDescription></SheetDescription> 
         </SheetHeader>
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 py-2 text-2xl">
@@ -52,7 +37,6 @@ export default function BookInfo({ book }: BookInfoProps) {
           <p>XX% der LeserInnen empfehlen dieses Buch weiter.</p>
           <div>
             <p className="font-bold text-lg py-2">Rezensionen</p>
-
             <Review
               userName="Denise"
               ratingAvg={5}

@@ -1,4 +1,4 @@
-from fastapi import Depends
+from fastapi import Depends, HTTPException
 from sqlalchemy import select
 from sqlmodel import create_engine, Session, SQLModel
 from api.book.model import Book
@@ -6,19 +6,31 @@ from api.rating.model import Rating
 from api.user.model import User
 from api.auth import password
 
+
+
 engine = None
 
 config = {
     "db-user": "postgres",
     "db-pass": "qwer1234",
-    "db-network": "localhost"
+    "db-network": "localhost",
+    "db-port": 5433
 }
 
 db_name = "buchklub-db"
-db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}/{db_name}"
+db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}:{config['db-port']}/{db_name}"
+
 engine = create_engine(db_url, echo=True)
 
+import sys
+import locale
+
+print(f"Default encoding: {sys.getdefaultencoding()}")
+print(f"file system encoding: {sys.getfilesystemencoding()}")
+print(f"locale encoding: {locale.getpreferredencoding()}")
+
 def create_db_and_tables():
+    print(db_url)
     SQLModel.metadata.create_all(engine)
 
 def get_session():
@@ -26,26 +38,30 @@ def get_session():
         yield s
 
 def write_to_db(Field, data,s:Session=Depends(get_session)):
-    print("this is the data to write in the db: ", data)
     if not Field.__name__ == "Rating":
         existing_data = s.exec(select(Field).where(Field.name == data.name)).first()
         if not existing_data:
+            data = Field.model_validate(data)
             s.add(data)
             s.commit()
             s.refresh(data)
+        else:
+            raise HTTPException(status_code=409, detail=f"{data.name} existiert bereits!")
     else: 
-        print("adding ratings to the database")
+        data = Field.model_validate(data)
         s.add(data)
         s.commit()
         s.refresh(data)
+    return data
 
 
 def create_mock_data():
+    
     with Session(engine) as s:
-        b = Book(name="Frankenstein", author="Mary Shelly", genre="Horror",year=1818)
-        b1 = Book(name="Die unendliche Geschichte", author="Michael Ende", genre="Fantasy",year=2005)
-        b2 = Book(name="Life of Pi", author="Yann Martel", genre="Dokumentation", year=2030)
-        b3 = Book(name="Picture of Dorian Grey", author="Robert Deibel", genre="porn", year=1999)
+        b = Book(name="Frankenstein", author="Mary Shelly", genre=["Horror"],year=1818)
+        b1 = Book(name="Die unendliche Geschichte", author="Michael Ende", genre=["Fantasy"],year=2005)
+        b2 = Book(name="Life of Pi", author="Yann Martel", genre=["Dokumentation"], year=2030)
+        b3 = Book(name="Picture of Dorian Grey", author="Robert Deibel", genre=["porn"], year=1999)
         books = [b,b1,b2,b3]
         for book in books:
             write_to_db(Book,book,s)
@@ -64,8 +80,8 @@ def create_mock_data():
         u4id = s.exec(select(User).where(User.name == u4.name)).first()[0].id
         bid = s.exec(select(Book).where(Book.name == b.name)).first()[0].id
         if bid and uid and u1id and u2id and u3id:
-            rb = Rating(book_id=bid, user_id=uid, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
-            r1b = Rating(book_id=bid, user_id=u1id, setting=1, plot=7, engagement=7, characters=7, style=7, recommend=True, comment="")
+            rb = Rating(book_id=bid, user_id=uid, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="awesome")
+            r1b = Rating(book_id=bid, user_id=u1id, setting=1, plot=7, engagement=7, characters=7, style=7, recommend=True, comment="sucked")
             r2b = Rating(book_id=bid, user_id=u2id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             r3b = Rating(book_id=bid, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             ratings = [rb, r1b, r2b, r3b]
@@ -76,7 +92,7 @@ def create_mock_data():
             rb1 = Rating(book_id=b1id, user_id=uid, setting=2, plot=3, engagement=4, characters=5, style=6, recommend=True, comment="")
             r1b1 = Rating(book_id=b1id, user_id=u1id, setting=2, plot=3, engagement=7, characters=4, style=7, recommend=True, comment="")
             r2b1 = Rating(book_id=b1id, user_id=u2id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=True, comment="")
-            r3b1= Rating(book_id=b1id, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
+            r3b1= Rating(book_id=b1id, user_id=u3id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="okay")
             r4b1 = Rating(book_id=b1id, user_id=u4id, setting=1, plot=1, engagement=1, characters=1, style=1, recommend=False, comment="")
             name = Rating.__name__
             print("Rating name", name)
