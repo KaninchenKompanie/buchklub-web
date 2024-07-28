@@ -6,6 +6,7 @@ import {
   FormLabel,
   FormMessage,
   Form,
+  FormDescription,
 } from "@/components/ui/form.tsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -22,6 +23,8 @@ import {
 import { bookSchema } from "../configurations/schemas";
 import { ReactElement } from "react";
 import { Toggle } from "@/components/ui/toggle";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 
 export default function AddBook() {
 
@@ -29,8 +32,6 @@ export default function AddBook() {
     resolver: zodResolver(bookSchema),
     defaultValues: {
       name: "",
-      author: "",
-      year: "",
       genre: [],
     },
   });
@@ -40,22 +41,41 @@ export default function AddBook() {
     console.log("hallo");
   }
 
-  const inputFields = (name: any, label: string) => {
+  const inputFields = (name: any, label: string, props?:any) => {
     return <FormField
       control={form.control}
       name={name}
       render={({ field }) => (
-        <FormItem className="grid gap-3 pt-3 pb-3">
+        <FormItem className="grid gap-1 pt-3 pb-3">
           <FormLabel className="text-left font-sans font-semibold text-xl pb-1">
             {label}
           </FormLabel>
           <FormControl>
-            <Input autoComplete="off" {...field} />
+            <Input autoComplete="off" {...field} {...props} />
           </FormControl>
           <FormMessage />
         </FormItem>
       )}
     />
+  };
+
+  const textFields = () => {
+    return <FormField
+      control={form.control}
+      name="description"
+      render={({ field }) => (
+        <FormItem className="grid gap-1 pt-3 pb-3">
+          <FormLabel className="text-left font-sans font-semibold text-xl pb-1">Beschreibung des Buches
+          </FormLabel>
+          <FormControl>
+            <Textarea
+              {...field}
+            />
+          </FormControl>
+          <FormMessage />
+        </FormItem>
+      )}
+    />;
   };
 
   const showGenres = () => {
@@ -78,7 +98,7 @@ export default function AddBook() {
         control={form.control}
         name="genre"
         render={() => (
-          <FormItem className="grid gap-3 pt-3 pb-3">
+          <FormItem className="grid gap-1 pt-3 pb-3">
             <FormLabel className="text-left font-sans font-semibold text-xl pb-1">
               Genres
             </FormLabel>
@@ -91,7 +111,7 @@ export default function AddBook() {
                 render={({ field }) => {
                   return (
                     <Toggle
-                      className="py-1 px-3 m-1 justify-center text-base font-serif italic font-light"
+                      className="py-1 px-3 m-1 justify-center text-base font-serif italic font-light border data-[state=on]:border-primary"
                       onClick={() => {
                         console.log(field)
                         let checked = field.value?.includes(genre)
@@ -135,13 +155,11 @@ export default function AddBook() {
               </DialogTitle>
               <DialogDescription />
             </DialogHeader>
-
             {inputFields("name", "Buchtitel")}
             {inputFields("author", "Autor des Buches")}
-            {inputFields("year", "Jahr der Veröffentlichung")}
+            {inputFields("year", "Jahr der Veröffentlichung", {valueasnumber: true})}
             {showGenres()}
-
-
+            {textFields()}
             <Button className="mt-8" type="submit">Buch hinzufügen</Button>
           </form>
         </Form>
