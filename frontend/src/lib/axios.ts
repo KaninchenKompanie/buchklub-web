@@ -1,8 +1,12 @@
+import { refresh } from "@/modules/auth/api";
 import {
+  getAccessTokenFromStorage,
   getRefreshTokenFromStorage,
   removeTokensFromStorage,
   setAccessTokenToStorage,
+  setRefreshTokenToStorage,
 } from "@/modules/auth/utils";
+import { PagePaths } from "@/pages/PagePaths";
 import Axios from "axios";
 
 export const axios = Axios.create({
@@ -10,7 +14,7 @@ export const axios = Axios.create({
 });
 
 axios.interceptors.request.use(async (config: any) => {
-  const token = localStorage.getItem("site");
+  const token = getAccessTokenFromStorage();
 
   if (token) {
     config.headers.authorization = `Bearer ${token}`;
@@ -25,29 +29,33 @@ axios.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // If the error status is 401 and there is no originalRequest._retry flag,
+    // If the error status is 403 and there is no originalRequest._retry flag,
     // it means the token has expired and we need to refresh it
-    if (error.response.status === 401 && !originalRequest._retry) {
+    if (error.response.status === 403 && !originalRequest._retry) {
       originalRequest._retry = true;
 
       try {
         const refreshToken = getRefreshTokenFromStorage();
+        if (!refreshToken) {
+          removeTokensFromStorage();
+          window.location.href = PagePaths.login;
+          return;
+        }
         // TODO outsource function
-        const response = await axios.post("/refresh-token", {
-          refreshToken,
-        });
-        const { token } = response.data;
+        const tokenData = await refresh(refreshToken);
 
-        setAccessTokenToStorage(token);
+        setAccessTokenToStorage(tokenData.accessToken);
+        setRefreshTokenToStorage(tokenData.refreshToken);
 
         // Retry the original request with the new token
-        originalRequest.headers.Authorization = `Bearer ${token}`;
+        originalRequest.headers.Authorization = `Bearer ${tokenData.accessToken}`;
         return axios(originalRequest);
       } catch (error) {
         // Handle refresh token error or redirect to login
         console.error("Failed to refresh access token");
         removeTokensFromStorage();
-        window.location.reload();
+        window.location.href = PagePaths.login;
+        return;
       }
     }
 

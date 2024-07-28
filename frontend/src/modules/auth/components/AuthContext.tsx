@@ -25,7 +25,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [token, setToken] = useState<string | null>(
     // TODO remove this default value as soon as backend is finished
-    getAccessTokenFromStorage() || "THIS_IS_JUST_SET_UNTIL_BACKEND_IS_SET"
+    getAccessTokenFromStorage() || null
   );
   const [isWaiting, setIsWaiting] = useState(false);
 

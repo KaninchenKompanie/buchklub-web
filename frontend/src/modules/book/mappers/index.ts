@@ -1,6 +1,8 @@
 import {
   BookBayesianSetting,
   BookBayesianSettingDto,
+  BookReviews,
+  BookReviewsDto,
   BooksStats,
   BooksStatsDto,
 } from "../configurations/types";
@@ -99,4 +101,21 @@ function mapBookBayesianSettingDtoToBookBayesianSetting(
     bayesianAverage: bookBayesianSettingDto.Bayesian_average || 0,
     userCount: bookBayesianSettingDto["User Count"] || 0,
   };
+}
+
+export function mapBookReviewsDtoToBookReviews(
+  bookReviewsDto: BookReviewsDto
+): BookReviews {
+  return {
+    id: bookReviewsDto.id,
+    bookId: bookReviewsDto.book_id,
+    userId: bookReviewsDto.user_id,
+    recommend: bookReviewsDto.recommend,
+    comment: bookReviewsDto.comment,
+    setting: bookReviewsDto.setting,
+    plot: bookReviewsDto.plot,
+    engagement: bookReviewsDto.engagement,
+    characters: bookReviewsDto.characters,
+    style: bookReviewsDto.style
+  }
 }

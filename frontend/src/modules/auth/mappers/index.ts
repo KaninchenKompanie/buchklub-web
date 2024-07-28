@@ -4,7 +4,7 @@ export function mapTokenDataDtoToTokenData(
   tokenDataDto: TokenDataDto
 ): TokenData {
   return {
-    accessToken: tokenDataDto.access_token,
-    refreshToken: tokenDataDto.refresh_token,
+    accessToken: tokenDataDto.access_token.access_token,
+    refreshToken: tokenDataDto.refresh_token.access_token,
   };
 }
