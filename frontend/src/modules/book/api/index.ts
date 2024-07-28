@@ -4,9 +4,8 @@ import { Book, BooksStats } from "../configurations/types";
 import { urlPaths } from "@/modules/common/configurations/constants";
 
 export async function fetchBooksStats(): Promise<BooksStats> {
-  return mapBooksStatsDtoToBookStats(
-    (await axios.get(`${urlPaths.books}/stats`)).data
-  );
+  const result = (await axios.get(`${urlPaths.reviews}/stats/`)).data;
+  return mapBooksStatsDtoToBookStats(result);
 }
 
 export async function fetchBooks(): Promise<Book[]> {

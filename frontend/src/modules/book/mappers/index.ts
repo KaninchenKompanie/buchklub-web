@@ -76,7 +76,7 @@ export function mapBooksStatsDtoToBookStats(
       recommendPercentage:
         bookStatsDto.most_controversial_book.recommend_percentage || 0,
     },
-    bookStats: bookStatsDto.book_stats.map((bookStat) => ({
+    bookStats: bookStatsDto.all_books_stats.map((bookStat) => ({
       setting: bookStat.setting || 0,
       plot: bookStat.plot || 0,
       engagement: bookStat.engagement || 0,
@@ -96,7 +96,7 @@ function mapBookBayesianSettingDtoToBookBayesianSetting(
 ): BookBayesianSetting {
   return {
     book: bookBayesianSettingDto.Book || "",
-    bayesianSetting: bookBayesianSettingDto.Bayesian_plot || 0,
+    bayesianAverage: bookBayesianSettingDto.Bayesian_average || 0,
     userCount: bookBayesianSettingDto["User Count"] || 0,
   };
 }

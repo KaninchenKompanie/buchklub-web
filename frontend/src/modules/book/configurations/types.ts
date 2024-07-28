@@ -55,7 +55,7 @@ export type BookRatingExtendedDto = {
 
 export type BookBayesianSetting = {
   book: string;
-  bayesianSetting: number;
+  bayesianAverage: number;
   userCount: number;
 };
 
@@ -83,7 +83,7 @@ export type BooksStatsDto = {
     standard_deviation: BookRatingBasic;
     recommend_percentage: number;
   };
-  book_stats: BookStatMetaDto[];
+  all_books_stats: BookStatMetaDto[];
 };
 
 export type BookStatMetaDto = {
@@ -104,6 +104,6 @@ export type BookStatMeta = {
 
 export type BookBayesianSettingDto = {
   Book: string;
-  Bayesian_plot: number;
+  Bayesian_average: number;
   "User Count": number;
 };

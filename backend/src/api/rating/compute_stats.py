@@ -107,10 +107,10 @@ def find_best_books(s: Session):
             bayesian_avgs['recommend_percentage'] = get_recommendation_percentage(book.id, s)
             book_bayesian_avgs[book.name] = bayesian_avgs
             for category, bayesian_avg in bayesian_avgs.items():
-                if category not in best_books or bayesian_avg > best_books[category][f'Bayesian_{category}']:
+                if category not in best_books or bayesian_avg > best_books[category][f'Bayesian_average']:
                     best_books[category] = {
                         'Book': book.name,
-                        f'Bayesian_{category}': bayesian_avg,
+                        f'Bayesian_average': bayesian_avg,
                         'User Count': len(s.exec(select(Rating).where(Rating.book_id == book.id)).all())
                     }
             
