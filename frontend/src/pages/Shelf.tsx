@@ -6,24 +6,21 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { useEffect, useState } from "react";
-import { Book } from "@/modules/book/configurations/types";
 import AddBook from "@/modules/book/components/AddBook";
 import RateBook from "@/modules/book/components/RateBook";
 import { GoCommentDiscussion } from "react-icons/go";
 import BookInfo from "@/modules/book/components/BookInfo";
 import Rating from "@/modules/common/components/Rating";
-
+import { useBooks } from "@/modules/book/hooks/useBooks";
 
 export default function Shelf() {
-  const [catalogue, setCatalogue] = useState<Book[]>([]);
+  const { books, isLoading, isError } = useBooks();
 
-  useEffect(() => {
-    fetch("http://127.0.0.1:8000/books")
-      .then((response) => response.json())
-      .then((catalogue) => setCatalogue(catalogue))
-      .catch((error) => console.error(error));
-  }, []);
+  // // TODO show custom loader
+  if (isLoading) return <div>Loading</div>;
+
+  // TODO show error
+  if (isError) return <div>Error sorry</div>;
 
   return (
     <div className="flex flex-col p-20">
@@ -43,17 +40,23 @@ export default function Shelf() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {catalogue.map((book, index) => (
+          {books.map((book, index) => (
             <TableRow key={index}>
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
               <TableCell> {book.genre} </TableCell>
-              <TableCell> <Rating value={book.rating ?? 0} /> </TableCell>
-              <TableCell> <GoCommentDiscussion /> </TableCell>
+              <TableCell>
+                <Rating value={book.rating ?? 0} />
+              </TableCell>
+              <TableCell>
+                <GoCommentDiscussion />
+              </TableCell>
               <TableCell>
                 <RateBook />
               </TableCell>
-              <TableCell><BookInfo id={0} /></TableCell>
+              <TableCell>
+                <BookInfo id={0} />
+              </TableCell>
             </TableRow>
           ))}
         </TableBody>

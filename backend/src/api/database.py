@@ -35,6 +35,25 @@ def get_session():
     with Session(engine) as s:
         yield s
 
+def write_to_db(Field, data):
+    with Session(engine) as s:
+        for element in data:
+            print("element informaiton: ", element)
+            print("Field name: ", Field.__name__, " field type: ", type(Field.__name__))
+            if not Field.__name__ == "Rating":
+                print("Field not rating")
+                existing_data = s.exec(select(Field).where(Field.name == element.name)).first()
+                if not existing_data:
+                    s.add(element)
+                    s.commit()
+                    s.refresh(element)
+            else: 
+                print("adding ratings to the database")
+                s.add(element)
+                s.commit()
+                s.refresh(element)
+
+
 def create_mock_data():
     return
     # with Session(engine) as s:
