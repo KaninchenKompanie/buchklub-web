@@ -1,36 +1,30 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import { Book } from "@/modules/book/types/book";
-import { GiFeather } from "react-icons/gi";
-import AddBook from "@/components/AddBook";
-import RateBook from "@/components/RateBook";
+import { useEffect, useState } from "react";
+import { Book } from "@/modules/book/configurations/types";
+import AddBook from "@/modules/book/components/AddBook";
+import RateBook from "@/modules/book/components/RateBook";
+import { GoCommentDiscussion } from "react-icons/go";
+import BookInfo from "@/modules/book/components/BookInfo";
+import Rating from "@/modules/common/components/Rating";
+
 
 export default function Shelf() {
   const [catalogue, setCatalogue] = useState<Book[]>([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/shelf")
+    fetch("http://127.0.0.1:8000/books")
       .then((response) => response.json())
       .then((catalogue) => setCatalogue(catalogue))
       .catch((error) => console.error(error));
   }, []);
 
-  const goldenFeathers = (n: number) => {
-    let feathers = [];
-    for (let i = 0; i < n; i++) {
-      feathers.push(<GiFeather className="text-pink-400" />);
-    }
-    return <div className="flex flex-row">{feathers}</div>;
-  };
   return (
     <div className="flex flex-col p-20">
       <div className="ml-auto mb-10">
@@ -44,6 +38,7 @@ export default function Shelf() {
           <TableRow>
             <TableHead> Name </TableHead>
             <TableHead> Author </TableHead>
+            <TableHead> Genre </TableHead>
             <TableHead> Rating </TableHead>
           </TableRow>
         </TableHeader>
@@ -52,10 +47,13 @@ export default function Shelf() {
             <TableRow key={index}>
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
-              <TableCell> {goldenFeathers(book.rating)} </TableCell>
+              <TableCell> {book.genre} </TableCell>
+              <TableCell> <Rating value={book.rating ?? 0} /> </TableCell>
+              <TableCell> <GoCommentDiscussion /> </TableCell>
               <TableCell>
                 <RateBook />
               </TableCell>
+              <TableCell><BookInfo id={0} /></TableCell>
             </TableRow>
           ))}
         </TableBody>
