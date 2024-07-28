@@ -1,18 +1,16 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import { Book } from "@/modules/book/types/book";
+import { useEffect, useState } from "react";
 import { GiFeather } from "react-icons/gi";
-import AddBook from "@/components/AddBook";
-import RateBook from "@/components/RateBook";
+import { Book } from "@/modules/book/configurations/types";
+import AddBook from "@/modules/book/components/AddBook";
+import RateBook from "@/modules/book/components/RateBook";
 
 export default function Shelf() {
   const [catalogue, setCatalogue] = useState<Book[]>([]);
