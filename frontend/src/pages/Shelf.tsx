@@ -16,11 +16,11 @@ import { useBooks } from "@/modules/book/hooks/useBooks";
 export default function Shelf() {
   const { books, isLoading, isError } = useBooks();
 
-  // // TODO show custom loader
-  if (isLoading) return <div>Loading</div>;
-
   // TODO show error
   if (isError) return <div>Error sorry</div>;
+    
+  // // TODO show custom loader
+  if (isLoading) return <div>Loading</div>;
 
   return (
     <div className="flex flex-col p-20">
@@ -57,12 +57,9 @@ export default function Shelf() {
                 <RateBook />
               </TableCell>
               <TableCell>
-                
-
-                  <BookInfo 
-                    book={books.find(item => item.id == book.id)}
-                  />
-                
+                <BookInfo
+                  book={books.find(item => item.id == book.id)}
+                />
               </TableCell>
             </TableRow>
           ))}
