@@ -18,7 +18,7 @@ export function setAccessTokenToStorage(token: string): void {
 }
 
 export function getRefreshTokenFromStorage(): string | null {
-  return localStorage.getItem(localStorageTokenKeys.accessToken);
+  return localStorage.getItem(localStorageTokenKeys.refreshToken);
 }
 
 export function setRefreshTokenToStorage(token: string): void {

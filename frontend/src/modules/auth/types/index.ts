@@ -12,7 +12,11 @@ export type TokenData = {
   refreshToken: string;
 };
 
-export type TokenDataDto = {
+export type Token = {
   access_token: string;
-  refresh_token: string;
+};
+
+export type TokenDataDto = {
+  access_token: Token;
+  refresh_token: Token;
 };

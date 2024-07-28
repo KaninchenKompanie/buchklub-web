@@ -8,6 +8,6 @@ from api.rating import view as reviews
 api = APIRouter()
 
 
-api.include_router(books.router, prefix="/books", dependencies=[Depends(JWTBearer)])
+api.include_router(books.router, prefix="/books", dependencies=[Depends(JWTBearer())])
 api.include_router(users.router, prefix="/users")
-api.include_router(reviews.router, prefix="/reviews", dependencies=[Depends(JWTBearer)])
+api.include_router(reviews.router, prefix="/reviews", dependencies=[Depends(JWTBearer())])

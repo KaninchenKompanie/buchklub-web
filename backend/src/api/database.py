@@ -4,6 +4,7 @@ from sqlmodel import create_engine, Session, SQLModel
 from api.book.model import Book
 from api.rating.model import Rating
 from api.user.model import User
+from api.auth import password
 
 
 
@@ -64,11 +65,11 @@ def create_mock_data():
         books = [b,b1,b2,b3]
         for book in books:
             write_to_db(Book,book,s)
-        u = User(name="Robert",hashed_password="robert")
-        u1 = User(name="Leo", hashed_password="leo")
-        u2 = User(name="Inge", hashed_password="inge")
-        u3 = User(name="Harald", hashed_password="pipikaka")
-        u4 = User(name="Denise", hashed_password="pipikaka2")
+        u = User(name="Robert",hashed_password=password.hash("robert"))
+        u1 = User(name="Leo", hashed_password=password.hash("leo"))
+        u2 = User(name="Inge", hashed_password=password.hash("inge"))
+        u3 = User(name="Harald", hashed_password=password.hash("pipikaka"))
+        u4 = User(name="Denise", hashed_password=password.hash("pipikaka2"))
         users = [u, u1, u2, u3, u4]
         for user in users:
             write_to_db(User,user,s)
