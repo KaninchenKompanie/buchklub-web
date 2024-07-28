@@ -1,3 +1,4 @@
+import os
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
@@ -18,7 +19,8 @@ async def lifespan(app: FastAPI):
 def create_app() -> FastAPI:
 
     app = FastAPI(lifespan=lifespan)
-    origins = settings.ORIGINS
+    # origins = os.getenv("BACKEND_CORS_ORIGINS", settings.ORIGINS)
+    origins = ["*"]
     app.add_middleware(
         CORSMiddleware,
         allow_origins=origins, 

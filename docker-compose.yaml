@@ -17,8 +17,6 @@ services:
       interval: 1s
       timeout: 5s
       retries: 10
-    ports:
-      - 5432:5432
 
   adminer:
     image: adminer
@@ -79,6 +77,8 @@ services:
       args:
         INSTALL_DEV: ${INSTALL_DEV-false}
     platform: linux/amd64 # Patch for M1 Mac
+    ports:
+      - 4200:80
     # labels:
     #   - traefik.enable=true
     #   - traefik.docker.network=traefik-public
@@ -112,7 +112,8 @@ services:
     build:
       context: ./frontend
       args:
-        - VITE_API_URL=https://${DOMAIN?Variable not set}
+        # - VITE_API_URL=https://${DOMAIN?Variable not set}
+        - VITE_API_URL=https://localhost:4200
         - NODE_ENV=production
     ports:
       - 8000:80
