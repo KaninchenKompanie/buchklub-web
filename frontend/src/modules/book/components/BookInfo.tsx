@@ -15,6 +15,8 @@ import RecommendationDistribution from "./RecommendationDistribution";
 import AverageRatingCategory from "./AverageRatingCategory";
 import { Badge } from "@/components/ui/badge";
 import Rating from "@/modules/common/components/Rating";
+import AverageRatingCategoryBook from "./AverageRatingCategoryBook";
+import Review from "./Review";
 
 type BookInfoProps = {
   id: number;
@@ -42,7 +44,7 @@ export default function BookInfo(props: BookInfoProps) {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button>Book info</Button>
+        <Button>Info</Button>
       </SheetTrigger>
       <SheetContent className="sm:max-w-[600px] overflow-y-auto">
         <SheetHeader>
@@ -62,22 +64,16 @@ export default function BookInfo(props: BookInfoProps) {
             </div>
           </SheetDescription>
         </SheetHeader>
-        <div className="flex flex-col">
-          <h3>Statistics</h3>
-          <div className="flex flex-col py-2">
-            <div className="font-bold py-2">Insgesamte Bewertung</div>
-            <Rating value={book?.rating ?? 0} />
+        <div className="flex flex-col gap-4">
+          <div className="flex items-center gap-2 py-2 text-2xl">
+            <Rating value={book?.rating ?? 0} className="flex" />
           </div>
-          <AverageRatingCategory
-            data={[
-              { category: "setting", rating: 4 },
-              { category: "plot", rating: 4 },
-              { category: "engagement", rating: 7 },
-              { category: "characters", rating: 2 },
-              { category: "style", rating: 7 },
-            ]}
-          />
-          <RecommendationDistribution />
+          <AverageRatingCategoryBook id={0} />
+          <p>XX% der LeserInnen empfehlen dieses Buch weiter.</p>
+          <div>
+            <p className="font-bold text-lg py-2">Rezensionen</p>
+            <Review />
+          </div>
         </div>
       </SheetContent>
     </Sheet>
