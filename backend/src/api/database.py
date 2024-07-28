@@ -3,6 +3,7 @@ from sqlmodel import create_engine, Session, SQLModel
 from api.book.model import Book
 from api.rating.model import Rating
 from api.user.model import User
+from api.auth import password
 
 engine = None
 
@@ -39,9 +40,9 @@ def create_mock_data():
         print("this is book one: ", b1)
         print("len of books: ", len(books))
         if books: print("bool abfrage")
-        u = User(name="Robert",hashed_password="robert")
-        u1 = User(name="Leo", hashed_password="leo")
-        u2 = User(name="Inge", hashed_password="inge")
+        u = User(name="Robert",hashed_password=password.hash("robert"))
+        u1 = User(name="Leo", hashed_password=password.hash("leo"))
+        u2 = User(name="Inge", hashed_password=password.hash("inge"))
         users = [u, u1, u2]
         for user in users:
             existing_user = s.exec(select(User).where(User.name == user.name)).first()

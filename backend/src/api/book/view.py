@@ -4,18 +4,18 @@ from fastapi import APIRouter, Depends
 
 from sqlmodel import Session, select
 
-from api.book.model import Book, BookPublic
+from api.book.model import Book, BookPublic, BookCreate
 from api.database import get_session
-from api.auth.auth_bearer import JWTBearer
 
 router = APIRouter()
 
-@router.post("/", response_model=BookPublic, dependencies=[Depends(JWTBearer)])
-def create_book(book: Book, s: Session = Depends(get_session)):
-    s.add(book)
+@router.post("/", response_model=BookPublic)
+def create_book(book: BookCreate, s: Session = Depends(get_session)):
+    db_book = Book.model_validate(book)
+    s.add(db_book)
     s.commit()
-    s.refresh(book)
-    return book
+    s.refresh(db_book)
+    return db_book
 
 @router.get("/", response_model=List[BookPublic])
 def list_books(s: Session = Depends(get_session)):
