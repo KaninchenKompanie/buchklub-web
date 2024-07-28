@@ -49,7 +49,7 @@ export default function HorizontalBarChartCard({
               axisLine={false}
               tickFormatter={(value) => value}
             />
-            <YAxis />
+            <YAxis width={15} />
             <ChartTooltip
               labelClassName="text-slate-800 font-bold "
               wrapperClassName="rounded-lg"

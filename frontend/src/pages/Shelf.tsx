@@ -1,24 +1,22 @@
 import {
   Table,
   TableBody,
-  TableCaption,
   TableCell,
   TableHead,
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import { Button } from "@/components/ui/button";
-import React, { useEffect, useState } from "react";
-import { Book } from "@/modules/book/types/book";
+import { useEffect, useState } from "react";
 import { GiFeather } from "react-icons/gi";
-import AddBook from "@/components/AddBook";
-import RateBook from "@/components/RateBook";
+import { Book } from "@/modules/book/configurations/types";
+import AddBook from "@/modules/book/components/AddBook";
+import RateBook from "@/modules/book/components/RateBook";
 
 export default function Shelf() {
   const [catalogue, setCatalogue] = useState<Book[]>([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/shelf")
+    fetch("http://127.0.0.1:8000/books")
       .then((response) => response.json())
       .then((catalogue) => setCatalogue(catalogue))
       .catch((error) => console.error(error));
@@ -52,7 +50,7 @@ export default function Shelf() {
             <TableRow key={index}>
               <TableCell key={index}> {book.name} </TableCell>
               <TableCell> {book.author} </TableCell>
-              <TableCell> {goldenFeathers(book.rating)} </TableCell>
+              <TableCell> {goldenFeathers(book.rating??0)} </TableCell>
               <TableCell>
                 <RateBook />
               </TableCell>
