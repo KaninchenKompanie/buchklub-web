@@ -14,6 +14,7 @@ import Review from "./Review";
 import { Badge } from "@/components/ui/badge";
 import { useReviews } from "../hooks/useReviews";
 import { useEffect, useState } from "react";
+import useBooksStats from "../hooks/useBooksStats";
 
 type BookInfoProps = {
   book?: Book;
@@ -24,6 +25,8 @@ export default function BookInfo({ book }: BookInfoProps) {
 
   const { reviews, isLoading, isError } = useReviews();
   const [bookReviews, setBookReviews] = useState<BookReviews[]>([]);
+  const { booksStats } = useBooksStats();
+  const stats = booksStats?.bookStats.find(item => item.bookId == book.id);  
 
   useEffect(() => {
     setBookReviews(reviews.filter((item) => item.bookId == book.id));
@@ -49,11 +52,11 @@ export default function BookInfo({ book }: BookInfoProps) {
         </SheetHeader>
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 py-2 text-2xl">
-            <Rating value={book.rating ?? 0} className="flex" />
+            <Rating value={book.rating ?? 1} className="flex" />
           </div>
-          <AverageRatingCategoryBook id={0} />
-          <p>XX% der LeserInnen empfehlen dieses Buch weiter.</p>
-          <div>
+          <AverageRatingCategoryBook id={book.id} />
+          <p>{stats?.recommendPercentage}% der LeserInnen empfehlen dieses Buch weiter.</p>
+          <div className="flex flex-col gap-2">
             <p className="font-bold text-lg py-2">Rezensionen</p>
             {isLoading && <div>Kommentare werden geladen</div>}
             {isError && <div>Ein Fehler ist aufgetreten.</div>}
@@ -61,7 +64,7 @@ export default function BookInfo({ book }: BookInfoProps) {
               <Review
                 key={index}
                 userName={review.userId.toString()}
-                ratingAvg={10}
+                ratingAvg={1}
                 ratingCategories={{
                   setting: review.setting,
                   plot: review.plot,
