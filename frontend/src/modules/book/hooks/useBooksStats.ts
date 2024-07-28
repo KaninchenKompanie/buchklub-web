@@ -1,17 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
-import { fetchBooks } from "../api";
+import { fetchBooksStats } from "../api";
 import { booksCacheKey } from "../configurations/constants";
 
-/** Fetches all non deleted brains */
-export const useBooks = () => {
+export default function useBooksStats() {
   const { data, ...result } = useQuery({
-    queryKey: [booksCacheKey],
-    queryFn: () => fetchBooks(),
+    queryKey: [booksCacheKey, "stats"],
+    queryFn: () => fetchBooksStats(),
     staleTime: Infinity,
   });
 
   return {
-    books: data || [],
+    booksStats: data,
     ...result,
   };
-};
+}
