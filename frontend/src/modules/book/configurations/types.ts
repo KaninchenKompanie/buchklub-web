@@ -89,7 +89,7 @@ export type BooksStatsDto = {
 export type BookStatMetaDto = {
   recommend_percentage: number;
   total_average_rating: number;
-  book_id: string;
+  book_id: number;
   book_name: string;
   rating_count: number;
 } & BookRatingBasic;
@@ -97,7 +97,7 @@ export type BookStatMetaDto = {
 export type BookStatMeta = {
   recommendPercentage: number;
   totalAverageRating: number;
-  bookId: string;
+  bookId: number;
   bookName: string;
   ratingCount: number;
 } & BookRatingBasic;

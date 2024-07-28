@@ -86,7 +86,7 @@ export function mapBooksStatsDtoToBookStats(
       style: bookStat.style || 0,
       recommendPercentage: bookStat.recommend_percentage || 0,
       totalAverageRating: bookStat.total_average_rating || 0,
-      bookId: bookStat.book_id || "",
+      bookId: bookStat.book_id || -1,
       bookName: bookStat.book_name || "",
       ratingCount: bookStat.rating_count || 0,
     })),
