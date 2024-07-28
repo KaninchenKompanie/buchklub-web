@@ -1,33 +1,36 @@
-import { ComponentProps, useState } from "react";
+
+import { BookRatingBasic } from "@/modules/book/configurations/types";
+import { ComponentProps } from "react";
 import { PiFeatherFill, PiFeatherLight } from "react-icons/pi";
 import { TbFeatherOff } from "react-icons/tb";
 
-export default function RatingSelection() {
+export default function RatingSelection({ currentRating, category, onChange }: { currentRating: number, category: keyof BookRatingBasic, onChange: Function}) {
   const ratingScale = 7;
-  const [rating, setRating] = useState(0);
 
-  const selectRating = (index: number) => {
-    setRating(index);
+  const selectRating = (selectedRating: number) => {
+    onChange(category, selectedRating);
   };
 
   return (
+    <div>
     <div className="flex gap-5">
       <TbFeatherOff onClick={() => selectRating(0)} />
       <div className="flex">
-        {Array.from({ length: ratingScale }).map((_, index) => (
+        {Array.from({ length: ratingScale }).map((_, rating) => (
           <RatingIcon
-            key={index}
-            isActive={index < rating}
-            onClick={() => selectRating(index + 1)}
+            key={rating}
+            isActive={rating < currentRating}
+            onClick={() => selectRating(rating + 1)}
           />
         ))}
       </div>
 
       <RatingIcon
-        isActive={ratingScale + 1 == rating}
+          isActive={ratingScale + 1 == currentRating}
         onClick={() => selectRating(ratingScale + 1)}
         className="text-amber-400"
       />
+    </div>
     </div>
   );
 }
