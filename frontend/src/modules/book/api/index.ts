@@ -12,6 +12,6 @@ export async function fetchBooks(): Promise<Book[]> {
   return (await axios.get(`${urlPaths.books}`)).data;
 }
 
-export async function newBook(book: CreateBook): Promise<Book[]> {
+export async function createBook(book: CreateBook): Promise<Book[]> {
   return (await axios.post(`${urlPaths.books}`, book));
 }

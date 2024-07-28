@@ -5,8 +5,7 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-  Form,
-  FormDescription,
+  Form
 } from "@/components/ui/form.tsx";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -14,6 +13,7 @@ import { z } from "zod";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogHeader,
@@ -23,10 +23,13 @@ import {
 import { bookSchema } from "../configurations/schemas";
 import { Toggle } from "@/components/ui/toggle";
 import { Textarea } from "@/components/ui/textarea";
-import { newBook } from "../api";
 import { CreateBook } from "../configurations/types";
+import useCreateBook from "../hooks/useCreateBook";
+import AdvButton from "@/components/wrapper/AdvButton";
 
 export default function AddBook() {
+
+  const { mutate: createBook, isPending } = useCreateBook();
 
   const form = useForm<z.infer<typeof bookSchema>>({
     resolver: zodResolver(bookSchema),
@@ -48,7 +51,7 @@ export default function AddBook() {
       genre: values.genre,
       description: values.description
     }
-    newBook(book);
+    createBook(book);
   }
 
   const inputFields = (name: any, label: string, props?:any) => {
@@ -168,7 +171,9 @@ export default function AddBook() {
             {inputFields("year", "Jahr der Veröffentlichung")}
             {showGenres()}
             {textFields()}
-            <Button className="mt-8" type="submit">Buch hinzufügen</Button>
+            <DialogClose asChild>
+              <AdvButton loading={isPending} className="mt-8" type="submit">Buch hinzufügen</AdvButton>
+            </DialogClose>
           </form>
         </Form>
       </DialogContent>
