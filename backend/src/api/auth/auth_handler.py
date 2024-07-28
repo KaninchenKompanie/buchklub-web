@@ -59,4 +59,4 @@ def refresh_token(refresh_token: JWT) -> JWTPair:
         user = UserPublic(name=token["name"], id=token["id"])
         return JWTPair(access_token=JWT(access_token=_sign_jwt(user, t + ttl)), refresh_token=refresh_token)
     else:
-        raise HTTPException(status_code=403, detail="Invalid or expired token.")
+        raise HTTPException(status_code=401, detail="Invalid or expired token.")
