@@ -47,7 +47,8 @@ def create_mock_data():
         b = Book(name="Frankenstein", author="Mary Shelly", genre="Horror",year=1818)
         b1 = Book(name="Die unendliche Geschichte", author="Michael Ende", genre="Fantasy",year=2005)
         b2 = Book(name="Life of Pi", author="Yann Martel", genre="Dokumentation", year=2030)
-        books = [b,b1,b2]
+        b3 = Book(name="Picture of Dorian Grey", author="Robert Deibel", genre="porn", year=1999)
+        books = [b,b1,b2,b3]
         write_to_db(Book,books)
         u = User(name="Robert",hashed_password="robert")
         u1 = User(name="Leo", hashed_password="leo")
