@@ -1,5 +1,6 @@
 from typing import List
 
+from api.book.crud import create_book
 from fastapi import APIRouter, Depends
 
 from sqlmodel import Session, select
@@ -10,12 +11,8 @@ from api.database import get_session
 router = APIRouter()
 
 @router.post("/", response_model=BookPublic)
-def create_book(book: BookCreate, s: Session = Depends(get_session)):
-    db_book = Book.model_validate(book)
-    s.add(db_book)
-    s.commit()
-    s.refresh(db_book)
-    return db_book
+def new_book(book: Book, s: Session = Depends(get_session)):
+    return create_book(book, s)
 
 @router.get("/", response_model=List[BookPublic])
 def list_books(s: Session = Depends(get_session)):

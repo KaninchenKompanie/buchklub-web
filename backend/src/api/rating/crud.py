@@ -2,14 +2,11 @@ from sqlmodel import Session, select
 from fastapi import Depends
 
 from api.rating.model import Rating
-from api.database import get_session
+from api.database import get_session, write_to_db
 
 
 def create_rating(rating: Rating, s: Session = Depends(get_session)):
-    s.add(rating)
-    s.commit()
-    s.refresh(rating)
-    return rating
+    return write_to_db(Rating, rating,s)
 
 def read_ratings(s: Session = Depends(get_session)):
     ratings = s.exec(select(Rating)).all()

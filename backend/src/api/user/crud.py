@@ -3,18 +3,15 @@ import secrets
 from sqlmodel import Session, select
 
 from api.user.model import UserCreate, User
-from api.database import get_session
+from api.database import get_session, write_to_db
 from api.auth.auth_handler import sign_jwt, JWTPair
 from api.auth import password
 
 
-def new_user(user: UserCreate, s: Session = Depends(get_session)):
-    data = {"hashed_password": hash(user.password)}
+def create_user(user: UserCreate, s: Session = Depends(get_session)):
+    data = {"hashed_password": password.hash(user.password)}
     db_user = User.model_validate(user, update=data)
-    s.add(db_user)
-    s.commit()
-    s.refresh(db_user)
-    return sign_jwt(db_user)
+    return sign_jwt(write_to_db(db_user))
 
 
 def check_user(a: str, b: str) -> bool:
@@ -24,6 +21,7 @@ def check_user(a: str, b: str) -> bool:
 def validate_user(user: UserCreate, s: Session = Depends(get_session)) -> JWTPair:
     try:
         ret_user: User = s.exec(select(User).where(User.name == user.name)).one()
+        print(ret_user)
         if check_user(ret_user.name, user.name) and password.validate(user.password, ret_user.hashed_password):
             return sign_jwt(ret_user)
         else:

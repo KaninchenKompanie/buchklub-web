@@ -1,14 +1,15 @@
+import { ComponentProps } from "react";
 import { GiFeather } from "react-icons/gi";
 
 type RatingProps = {
   value: number;
-};
+} & ComponentProps<"div">;
 
-export default function Rating(props: RatingProps) {
+export default function Rating({ value, ...props }: RatingProps) {
   let rating = [];
-  for (let i = 0; i < props.value; i++) {
-    rating.push(<GiFeather className="text-pink-400" />);
+  for (let i = 0; i < value; i++) {
+    rating.push(<GiFeather key={i} />);
   }
 
-  return <div className="flex flex-row">{rating}</div>;
+  return <div {...props}>{rating}</div>;
 }

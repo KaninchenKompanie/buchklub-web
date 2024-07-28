@@ -32,6 +32,7 @@ axios.interceptors.response.use(
 
       try {
         const refreshToken = getRefreshTokenFromStorage();
+        // TODO outsource function
         const response = await axios.post("/refresh-token", {
           refreshToken,
         });

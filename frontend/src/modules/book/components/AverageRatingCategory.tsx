@@ -1,17 +1,19 @@
 import HorizontalBarChartCard from "@/modules/common/components/HorizontalBarChartCard";
 
 type Props = {
+  title: string;
+  description: string;
   data: { category: string; rating: number }[];
 };
 
-export default function AverageRatingCategory(props: Props) {
+export default function AverageRatingCategory({ title, description, data }: Props) {
   return (
     <HorizontalBarChartCard
-      data={props.data}
+      data={data}
       valueKey={"rating"}
       labelKey={"category"}
-      title={"Bewertung pro Kategory"}
-      description={"XX ANZAHL BÜCHER XX"}
+      title={title}
+      description={description}
     />
   );
 }

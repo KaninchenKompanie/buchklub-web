@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
-from api.rating.crud import create_rating, delete_rating, read_rating, read_ratings, update_rating
+from api.rating.crud import create_rating, delete_rating, read_rating, read_ratings
 from api.database import get_session
 from api.rating.model import RatingBase
 
