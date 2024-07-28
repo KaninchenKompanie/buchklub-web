@@ -3,6 +3,7 @@ import {
   Card,
   CardContent,
   CardDescription,
+  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -29,6 +30,7 @@ type RadarChartCardProps = {
   valueKey: string;
   title: string;
   description: string;
+  footer?: string;
 } & ComponentProps<typeof Card>;
 
 export function RadarChartCard({
@@ -37,6 +39,7 @@ export function RadarChartCard({
   valueKey,
   title,
   description,
+  footer,
   className,
   ...props
 }: RadarChartCardProps) {
@@ -72,6 +75,13 @@ export function RadarChartCard({
           </RadarChart>
         </ChartContainer>
       </CardContent>
+      {footer && (
+        <CardFooter className="flex-col gap-2 text-sm">
+          <div className="flex items-center gap-2 font-medium leading-none">
+            {footer}
+          </div>
+        </CardFooter>
+      )}
     </Card>
   );
 }
