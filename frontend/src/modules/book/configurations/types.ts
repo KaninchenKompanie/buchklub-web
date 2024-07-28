@@ -1,13 +1,13 @@
 export type CreateBook = {
   name: string;
-  author?: string;
-  year?: number;
-  genre?: string[];
-  description?: string;
+  author: string;
+  year: number;
+  genre: string[];
+  description: string;
 };
 
 export type Book = CreateBook & {
-  id?: number;
+  id: number;
   rating?: number;
 };
 
@@ -19,27 +19,23 @@ export type BooksStats = {
     characters: BookBayesianSetting;
     style: BookBayesianSetting;
   };
-  bestSingleBook: {
+  mostLikedBook: {
     book: string;
-    percentiles: {
-      medianPercentile: number;
-    } & BookRatings;
+    bayesianAverages: BookRatingExtended;
+  };
+  lessLikedBook: {
+    book: string;
+    bayesianAverages: BookRatingExtended;
   };
   mostControversialBook: {
     book: string;
-    percentiles: {
-      medianPercentile: number;
-    } & BookRatings;
+    standardDeviation: BookRatingBasic;
+    recommendPercentage: number;
   };
-  worstBook: {
-    book: string;
-    percentiles: {
-      medianPercentile: number;
-    } & BookRatings;
-  };
+  bookStats: BookStatMeta[];
 };
 
-export type BookRatings = {
+export type BookRatingBasic = {
   setting: number;
   plot: number;
   engagement: number;
@@ -47,9 +43,19 @@ export type BookRatings = {
   style: number;
 };
 
+export type BookRatingExtended = {
+  totalAverageRating: number;
+  recommendPercentage: number;
+} & BookRatingBasic;
+
+export type BookRatingExtendedDto = {
+  total_average_rating: number;
+  recommended_percentage: number;
+} & BookRatingBasic;
+
 export type BookBayesianSetting = {
   book: string;
-  bayesianSetting: number;
+  bayesianAverage: number;
   userCount: number;
 };
 
@@ -60,29 +66,60 @@ export type BooksStatsDto = {
     engagement: BookBayesianSettingDto;
     characters: BookBayesianSettingDto;
     style: BookBayesianSettingDto;
+    recommend: BookBayesianSettingDto;
+    total_average_rating: number;
+    recommend_percentage: number;
   };
-  single_best_book: {
+  most_liked_book: {
     book: string;
-    percentiles: {
-      median_percentile: number;
-    } & BookRatings;
+    bayesian_averages: BookRatingExtendedDto;
+  };
+  less_liked_book: {
+    book: string;
+    bayesian_averages: BookRatingExtendedDto;
   };
   most_controversial_book: {
     book: string;
-    percentiles: {
-      median_percentile: number;
-    } & BookRatings;
+    standard_deviation: BookRatingBasic;
+    recommend_percentage: number;
   };
-  worst_book: {
-    book: string;
-    percentiles: {
-      median_percentile: number;
-    } & BookRatings;
-  };
+  all_books_stats: BookStatMetaDto[];
 };
+
+export type BookStatMetaDto = {
+  recommend_percentage: number;
+  total_average_rating: number;
+  book_id: number;
+  book_name: string;
+  rating_count: number;
+} & BookRatingBasic;
+
+export type BookStatMeta = {
+  recommendPercentage: number;
+  totalAverageRating: number;
+  bookId: number;
+  bookName: string;
+  ratingCount: number;
+} & BookRatingBasic;
 
 export type BookBayesianSettingDto = {
   Book: string;
-  Bayesian_plot: number;
+  Bayesian_average: number;
   "User Count": number;
 };
+
+export type BookReviewsDto = {
+  id: number;
+  book_id: number;
+  user_id: number;
+  recommend: boolean;
+  comment: string;
+} & BookRatingBasic
+
+export type BookReviews = {
+  id: number;
+  bookId: number;
+  userId: number;
+  recommend: boolean;
+  comment: string;
+} & BookRatingBasic;

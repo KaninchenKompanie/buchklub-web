@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlmodel import Session, select
 from api.user.model import UserCreate, UserPublic, User
 from api.database import get_session
-from api.user.crud import new_user, validate_user
+from api.user.crud import create_user, validate_user
 from api.auth.auth_handler import JWT, JWTPair, refresh_token as auth_refresh_token
 from api.auth.auth_bearer import JWTBearer
 
@@ -12,8 +12,8 @@ router = APIRouter()
 
 
 @router.post("/", response_model=JWTPair)
-def create_user(user: UserCreate, s: Session = Depends(get_session)):
-    return new_user(user, s)
+def new_user(user: UserCreate, s: Session = Depends(get_session)):
+    return create_user(user, s)
 
 @router.get("/", response_model=List[UserPublic], dependencies=[Depends(JWTBearer())])
 def list_users(s: Session = Depends(get_session)):

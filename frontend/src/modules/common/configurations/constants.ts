@@ -15,3 +15,9 @@ export const chartColors = [
   "rgba(132, 192, 219, 1)",
   "rgba(242, 213, 207, 1)",
 ];
+
+export const urlPaths = {
+  books: "/books",
+  reviews: "/reviews",
+  users: "/users",
+};
