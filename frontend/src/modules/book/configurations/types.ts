@@ -43,6 +43,8 @@ export type BookRatingBasic = {
   style: number;
 };
 
+export type BookCategory = keyof BookRatingBasic;
+
 export type BookRatingExtended = {
   totalAverageRating: number;
   recommendPercentage: number;

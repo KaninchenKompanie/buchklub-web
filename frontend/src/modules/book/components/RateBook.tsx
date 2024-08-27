@@ -11,12 +11,27 @@ import { Button } from "../../../components/ui/button";
 import { Label } from "../../../components/ui/label";
 import { RadioGroup, RadioGroupItem } from "../../../components/ui/radio-group";
 import RatingSelection from "../../common/components/RatingSelection";
-import { BookRatingBasic, CreateBookReview } from "../configurations/types";
+import {
+  BookCategory,
+  BookRatingBasic,
+  CreateBookReview,
+} from "../configurations/types";
 import { useState } from "react";
 import { submitReview } from "../api";
 
-export default function RateBook({ id }: { id: number }) {
+const bookRatingCategoryData: {
+  title: string;
+  description: string;
+  key: BookCategory;
+}[] = [
+  { key: "setting", title: "Setting", description: "" },
+  { key: "plot", title: "Plot", description: "" },
+  { key: "engagement", title: "Engagement", description: "" },
+  { key: "characters", title: "Characters", description: "" },
+  { key: "style", title: "Style", description: "" },
+];
 
+export default function RateBook({ id }: { id: number }) {
   const [rating, setRating] = useState<BookRatingBasic>({
     setting: 0,
     plot: 0,
@@ -26,22 +41,21 @@ export default function RateBook({ id }: { id: number }) {
   });
   const [recommendation, setRecommendation] = useState<boolean>(false);
 
-  const handleRatingChange = (category: keyof BookRatingBasic, value: number) => {
-    setRating(prevRating => ({
+  const handleRatingChange = (category: BookCategory, value: number) => {
+    setRating((prevRating) => ({
       ...prevRating,
       [category]: value,
     }));
+    console.log("hallo");
   };
 
   const handleRecommendationChange = (value: string) => {
-    console.log(value); 
+    console.log(value);
     if (value === "yes") {
       setRecommendation(true);
-    }
-    else if (value === "no") {
+    } else if (value === "no") {
       setRecommendation(false);
     }
-
   };
 
   const onSubmit = () => {
@@ -51,10 +65,10 @@ export default function RateBook({ id }: { id: number }) {
       userId: 0, //TODO: get user id! where??
       ...rating,
       recommend: recommendation,
-      comment: ""
-    }
+      comment: "",
+    };
     submitReview(review);
-  }
+  };
 
   return (
     <Dialog>
@@ -69,68 +83,27 @@ export default function RateBook({ id }: { id: number }) {
           </DialogDescription>
         </DialogHeader>
         <div>
-          <div className="mb-4">
-            <div className="text-lg font-semibold">Setting</div>
-            <p className="pb-2">
-              This includes world-building, lore, atmosphere, etc.
-            </p>
-            <RatingSelection
-              currentRating={rating.setting}
-              category='setting'
-              onChange={handleRatingChange}
-            />
-          </div>
-          <div className="mb-4">
-            <div className="text-lg font-semibold">Plot</div>
-            <p className="pb-2">
-              This includes structure, arcs, pacing, climax, tension,
-              resolution, hooks, etc.
-            </p>
-            <RatingSelection
-              currentRating={rating.plot}
-              category='plot'
-              onChange={handleRatingChange}
-            />
-          </div>
-          <div className="mb-4">
-            <div className="text-lg font-semibold">Engagement</div>
-            <p className="pb-2">
-              This includes immersion, enjoyment, themes, genre, tropes, etc.
-            </p>
-            <RatingSelection
-              currentRating={rating.engagement}
-              category='engagement'
-              onChange={handleRatingChange}
-            />
-          </div>
-          <div className="mb-4">
-            <div className="text-lg font-semibold">Characters</div>
-            <p className="pb-2">
-              This includes development, relatability, depth, dynamics, arcs,
-              etc.
-            </p>
-            <RatingSelection
-              currentRating={rating.characters}
-              category='characters'
-              onChange={handleRatingChange}
-            />
-          </div>
-          <div className="mb-4">
-            <div className="text-lg font-semibold">Style</div>
-            <p className="pb-2">
-              This includes writing, voice, point of view, narrator, etc.
-            </p>
-            <RatingSelection
-              currentRating={rating.style}
-              category='style'
-              onChange={handleRatingChange}
-            />
-          </div>
+          {bookRatingCategoryData.map((categoryData) => (
+            <div className="mb-4" key={categoryData.key}>
+              <div className="text-lg font-semibold">{categoryData.title}</div>
+              <p className="pb-2">{categoryData.description}</p>
+              <RatingSelection
+                currentRating={rating[categoryData.key]}
+                onSelectRating={(rating) =>
+                  
+                  handleRatingChange(categoryData.key, rating)
+                }
+              />
+            </div>
+          ))}
           <div>
             <div className="text-lg font-semibold pb-2">
               Würdest du das Buch weiterempfehlen?
             </div>
-            <RadioGroup className="flex" onValueChange={handleRecommendationChange}>
+            <RadioGroup
+              className="flex"
+              onValueChange={handleRecommendationChange}
+            >
               <div className="flex items-center space-x-2">
                 <RadioGroupItem value="yes" id="r2" />
                 <Label htmlFor="r2">Ja</Label>
@@ -143,7 +116,9 @@ export default function RateBook({ id }: { id: number }) {
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit" onClick={onSubmit}>Speichern</Button>
+          <Button type="submit" onClick={onSubmit}>
+            Speichern
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

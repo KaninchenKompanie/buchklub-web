@@ -8,13 +8,13 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Book, BookReviews } from "../configurations/types";
-import Rating from "@/modules/common/components/Rating";
 import AverageRatingCategoryBook from "./AverageRatingCategoryBook";
 import Review from "./Review";
 import { Badge } from "@/components/ui/badge";
 import { useReviews } from "../hooks/useReviews";
 import { useEffect, useState } from "react";
 import useBooksStats from "../hooks/useBooksStats";
+import RatingDisplay from "@/modules/common/components/RatingDisplay";
 
 type BookInfoProps = {
   book?: Book;
@@ -52,7 +52,7 @@ export default function BookInfo({ book }: BookInfoProps) {
         </SheetHeader>
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 py-2 text-2xl">
-            <Rating value={book.rating ?? 1} className="flex" />
+            <RatingDisplay rating={book.rating ?? 1} />
           </div>
           <AverageRatingCategoryBook id={book.id} />
           <p>{stats?.recommendPercentage}% der LeserInnen empfehlen dieses Buch weiter.</p>

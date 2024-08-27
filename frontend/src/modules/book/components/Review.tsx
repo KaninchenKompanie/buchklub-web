@@ -6,7 +6,7 @@ import { BiWorld } from "react-icons/bi";
 import { RiBook2Fill } from "react-icons/ri";
 
 import ToolTip from "@/modules/common/components/ToolTip";
-import Rating from "@/modules/common/components/Rating";
+import Rating from "@/modules/common/components/RatingDisplay";
 
 type ReviewProps = {
   ratingAvg: number;

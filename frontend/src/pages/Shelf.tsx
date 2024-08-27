@@ -10,8 +10,8 @@ import AddBook from "@/modules/book/components/AddBook";
 import RateBook from "@/modules/book/components/RateBook";
 import { GoCommentDiscussion } from "react-icons/go";
 import BookInfo from "@/modules/book/components/BookInfo";
-import Rating from "@/modules/common/components/Rating";
 import { useBooks } from "@/modules/book/hooks/useBooks";
+import RatingDisplay from "@/modules/common/components/RatingDisplay";
 
 export default function Shelf() {
   const { books, isLoading, isError } = useBooks();
@@ -48,7 +48,7 @@ export default function Shelf() {
               <TableCell> {book.genre} </TableCell>
               <TableCell> {book.year} </TableCell>
               <TableCell>
-                <Rating value={book.rating ?? 0} />
+                <RatingDisplay rating={book.rating ?? 4} />
               </TableCell>
               <TableCell>
                 <GoCommentDiscussion />
