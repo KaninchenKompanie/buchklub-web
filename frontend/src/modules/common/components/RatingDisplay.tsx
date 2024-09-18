@@ -6,7 +6,11 @@ type RatingProps = {
   rating: number;
 } & ComponentProps<"div">;
 
-export default function RatingDisplay({ rating, className, ...props }: RatingProps) {
+export default function RatingDisplay({
+  rating,
+  className,
+  ...props
+}: RatingProps) {
   const ratingIcons = getRatingIconsBasedOnRating(rating);
 
   return (
@@ -21,5 +25,5 @@ function getRatingIconsBasedOnRating(rating: number) {
   for (let i = 0; i < rating; i++) {
     ratingIcons.push(<RatingIcon filled={true} key={i} />);
   }
-  return rating;
+  return ratingIcons;
 }
