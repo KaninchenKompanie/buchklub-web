@@ -5,6 +5,8 @@ import {
   BookReviewsDto,
   BooksStats,
   BooksStatsDto,
+  CreateBookReview,
+  CreateBookReviewDto,
 } from "../configurations/types";
 
 export function mapBooksStatsDtoToBookStats(
@@ -116,6 +118,17 @@ export function mapBookReviewsDtoToBookReviews(
     plot: bookReviewsDto.plot,
     engagement: bookReviewsDto.engagement,
     characters: bookReviewsDto.characters,
-    style: bookReviewsDto.style
-  }
+    style: bookReviewsDto.style,
+  };
+}
+
+export function mapCreateBookReviewToCreateBookReviewDto(
+  createBookReview: CreateBookReview
+): CreateBookReviewDto {
+  const { bookId, userId, ...review } = createBookReview;
+  return {
+    book_id: bookId,
+    user_id: userId,
+    ...review,
+  };
 }

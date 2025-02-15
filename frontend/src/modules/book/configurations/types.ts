@@ -43,7 +43,7 @@ export type BookRatingBasic = {
   style: number;
 };
 
-export type BookCategory = keyof BookRatingBasic;
+export type BookCategory = keyof BookRatingBasic; // "setting" | "plot" | ... union type
 
 export type BookRatingExtended = {
   totalAverageRating: number;
@@ -117,13 +117,20 @@ export type CreateBookReview = {
   comment: string;
 } & BookRatingBasic;
 
+export type CreateBookReviewDto = {
+  book_id: number;
+  user_id: number;
+  recommend: boolean;
+  comment: string;
+} & BookRatingBasic;
+
 export type BookReviewsDto = {
   id: number;
   book_id: number;
   user_id: number;
   recommend: boolean;
   comment: string;
-} & BookRatingBasic
+} & BookRatingBasic;
 
 export type BookReviews = {
   id: number;

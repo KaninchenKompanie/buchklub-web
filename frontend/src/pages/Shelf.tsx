@@ -7,8 +7,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import AddBook from "@/modules/book/components/AddBook";
-import BookInfo from "@/modules/book/components/bookInfo/BookInfo";
-import RateBook from "@/modules/book/components/RateBook";
+import BookInfo from "@/modules/book/components/book-info/BookInfo";
+import RateBook from "@/modules/book/components/rate-book/RateBook";
 import { useBooks } from "@/modules/book/hooks/useBooks";
 import useBooksStats from "@/modules/book/hooks/useBooksStats";
 import { useReviews } from "@/modules/book/hooks/useReviews";
@@ -71,7 +71,7 @@ export default function Shelf() {
                 <GoCommentDiscussion />
               </TableCell>
               <TableCell>
-                <RateBook id={book.id} />
+                <RateBook book={book} />
               </TableCell>
               <TableCell>
                 <BookInfo

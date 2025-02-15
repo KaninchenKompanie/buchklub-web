@@ -15,7 +15,7 @@ export default function RatingSelection({
       {createEnumerationUpTo(maxRating).map((rating) => (
         <RatingIcon
           key={rating}
-          filled={rating < currentRating}
+          filled={rating < currentRating + 1}
           onClick={() => onSelectRating(rating + 1)}
         />
       ))}

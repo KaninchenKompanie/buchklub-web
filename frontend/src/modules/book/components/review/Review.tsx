@@ -7,6 +7,7 @@ import { RiBook2Fill } from "react-icons/ri";
 
 import RatingDisplay from "@/modules/common/components/RatingDisplay";
 import useUser from "@/modules/user/hooks/useUser";
+import { BookCategoryRecord } from "../../configurations/constants";
 import CategoryRating from "./CategoryRating";
 
 type ReviewProps = {
@@ -39,27 +40,27 @@ export default function Review({
             <CategoryRating
               rating={ratingCategories.setting}
               icon={<BiWorld />}
-              tooltipContent="Setting"
+              tooltipContent={BookCategoryRecord.setting.label}
             />
             <CategoryRating
               rating={ratingCategories.plot}
               icon={<RiBook2Fill />}
-              tooltipContent="Plot"
+              tooltipContent={BookCategoryRecord.plot.label}
             />
             <CategoryRating
               rating={ratingCategories.engagement}
               icon={<BsStars />}
-              tooltipContent="Engagement"
+              tooltipContent={BookCategoryRecord.engagement.label}
             />
             <CategoryRating
               rating={ratingCategories.characters}
               icon={<IoPerson />}
-              tooltipContent="Characters"
+              tooltipContent={BookCategoryRecord.characters.label}
             />
             <CategoryRating
               rating={ratingCategories.style}
               icon={<FaPenNib />}
-              tooltipContent="Style"
+              tooltipContent={BookCategoryRecord.style.label}
             />
           </div>
         </div>

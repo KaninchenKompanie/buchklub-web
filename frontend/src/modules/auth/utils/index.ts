@@ -1,6 +1,6 @@
+import { jwtDecode } from "jwt-decode";
 import { localStorageTokenKeys } from "../constants";
 import { TokenContent, User } from "../types";
-import { jwtDecode } from "jwt-decode";
 
 export function getUserDataFromAcessToken(): User | null {
   const token = getAccessTokenFromStorage();
@@ -8,7 +8,7 @@ export function getUserDataFromAcessToken(): User | null {
 
   const decoded = jwtDecode(token) as TokenContent;
 
-  return { name: decoded.name };
+  return { id: decoded.id, name: decoded.name };
 }
 
 export function getAccessTokenFromStorage(): string | null {
