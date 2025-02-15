@@ -8,7 +8,8 @@ export default function BookInfoStats({ stats }: BookInfoStatsProps) {
   if (!stats) return <></>;
   return (
     <p>
-      {stats.recommendPercentage}% der LeserInnen empfehlen dieses Buch weiter.
+      {Math.round(stats.recommendPercentage)}% der LeserInnen empfehlen dieses
+      Buch weiter.
     </p>
   );
 }

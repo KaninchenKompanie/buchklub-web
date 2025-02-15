@@ -1,21 +1,28 @@
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
 import { ComponentProps } from "react";
 import RatingIcon from "./RatingIcon";
 
 type RatingProps = {
-  rating: number;
+  rating?: number;
+  numberOfReviews: number;
 } & ComponentProps<"div">;
 
 export default function RatingDisplay({
-  rating,
+  rating = 0,
+  numberOfReviews,
   className,
   ...props
 }: RatingProps) {
-  const ratingIcons = getRatingIconsBasedOnRating(rating);
+  if (!rating) return "-";
 
+  const ratingIcons = getRatingIconsBasedOnRating(rating);
   return (
-    <div {...props} className={cn("flex gap-1", className)}>
-      {ratingIcons}
+    <div {...props} className={cn("flex gap-1 items-center", className)}>
+      {ratingIcons}{" "}
+      <Badge className="ml-2" variant="outline">
+        {numberOfReviews}
+      </Badge>
     </div>
   );
 }

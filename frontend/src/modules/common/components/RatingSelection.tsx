@@ -16,7 +16,7 @@ export default function RatingSelection({
         <RatingIcon
           key={rating}
           filled={rating < currentRating + 1}
-          onClick={() => onSelectRating(rating + 1)}
+          onClick={() => onSelectRating(rating)}
         />
       ))}
     </div>

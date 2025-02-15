@@ -16,7 +16,7 @@ import BookInfoStats from "./BookInfoStats";
 
 type BookInfoProps = {
   book?: Book;
-  reviews?: BookReviews[];
+  reviews: BookReviews[];
   stats?: BookStatMeta;
 };
 
@@ -34,7 +34,9 @@ export default function BookInfo({ book, reviews, stats }: BookInfoProps) {
           <span className="py-2">
             {book.author} [{book.year}]
           </span>
-          <Badge className="py-2 w-max">{book.genre}</Badge>
+          <div>
+            <Badge>{book.genre}</Badge>
+          </div>
           <span className="flex flex-col gap-1 py-2">
             <span className="font-bold">Beschreibung</span>
             <span>{book.description}</span>
@@ -43,7 +45,10 @@ export default function BookInfo({ book, reviews, stats }: BookInfoProps) {
         </SheetHeader>
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2 py-2 text-2xl">
-            <RatingDisplay rating={book.rating ?? 1} />
+            <RatingDisplay
+              rating={book.rating}
+              numberOfReviews={reviews?.length}
+            />
           </div>
           <AverageRatingCategoryBook id={book.id} />
           <BookInfoStats stats={stats} />

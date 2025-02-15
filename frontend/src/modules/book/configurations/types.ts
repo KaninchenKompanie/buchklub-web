@@ -139,3 +139,19 @@ export type BookReviews = {
   recommend: boolean;
   comment: string;
 } & BookRatingBasic;
+
+const genres = [
+  "fantasy",
+  "scienceFiction",
+  "krimi",
+  "thriller",
+  "liebesroman",
+  "historischerRoman",
+  "gesellschaftsroman",
+  "entwicklungsroman",
+  "kinderbuch",
+  "theaterstück",
+  "sachbuch",
+  "fachbuch",
+] as const;
+export type Genre = (typeof genres)[number];

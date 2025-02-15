@@ -6,16 +6,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import AddBook from "@/modules/book/components/AddBook";
+import AddBook from "@/modules/book/components/add-book/AddBook";
 import BookInfo from "@/modules/book/components/book-info/BookInfo";
 import RateBook from "@/modules/book/components/rate-book/RateBook";
 import { useBooks } from "@/modules/book/hooks/useBooks";
 import useBooksStats from "@/modules/book/hooks/useBooksStats";
 import { useReviews } from "@/modules/book/hooks/useReviews";
 import RatingDisplay from "@/modules/common/components/RatingDisplay";
-import { GoCommentDiscussion } from "react-icons/go";
-
-const defaultRating = 0;
 
 export default function Shelf() {
   const {
@@ -39,6 +36,9 @@ export default function Shelf() {
 
   if (isErrorBooks && isErrorReviews && isErrorStats) return <div>Error</div>;
 
+  const getReviewsForBook = (bookId: number) => {
+    return reviews.filter((bookReview) => bookReview.bookId === bookId);
+  };
   return (
     <div className="flex flex-col p-20">
       <div className="ml-auto mb-10">
@@ -65,10 +65,10 @@ export default function Shelf() {
               <TableCell> {book.genre} </TableCell>
               <TableCell> {book.year} </TableCell>
               <TableCell>
-                <RatingDisplay rating={book.rating ?? defaultRating} />
-              </TableCell>
-              <TableCell>
-                <GoCommentDiscussion />
+                <RatingDisplay
+                  rating={book.rating}
+                  numberOfReviews={getReviewsForBook(book.id).length}
+                />
               </TableCell>
               <TableCell>
                 <RateBook book={book} />
@@ -76,7 +76,7 @@ export default function Shelf() {
               <TableCell>
                 <BookInfo
                   book={books.find((item) => item.id == book.id)}
-                  reviews={reviews.filter((review) => review.bookId == book.id)}
+                  reviews={getReviewsForBook(book.id)}
                   stats={booksStats?.bookStats.find(
                     (item) => item.bookId == book.id
                   )}
