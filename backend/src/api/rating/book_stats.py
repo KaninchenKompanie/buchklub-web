@@ -8,8 +8,8 @@ import pandas as pd
 
 RATING_CATEGORIES = ['setting', 'plot', 'engagement', 'characters', 'style']
 
-def compute_average_categories(book_id, s: Session):
-    overall_means = s.exec(
+def compute_average_categories(book_id, session: Session):
+    overall_means = session.exec(
         select(
             func.avg(Rating.setting).label('setting'),
             func.avg(Rating.plot).label('plot'),
@@ -20,7 +20,7 @@ def compute_average_categories(book_id, s: Session):
         )
     ).one()
 
-    book_rating_counts = s.exec(
+    book_rating_counts = session.exec(
         select(Rating.book_id, func.count(Rating.id).label('rating_count'))
         .group_by(Rating.book_id)
     ).all()
@@ -30,7 +30,7 @@ def compute_average_categories(book_id, s: Session):
 
     average_ratings_per_book = float(sum(count for _, count in book_rating_counts) / len(book_rating_counts))
 
-    book_ratings = get_book_ratings(book_id, s)
+    book_ratings = get_book_ratings(book_id, session)
     if not book_ratings:
         return None
 
