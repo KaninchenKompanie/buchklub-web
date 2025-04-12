@@ -9,15 +9,10 @@ import pandas as pd
 RATING_CATEGORIES = ['setting', 'plot', 'engagement', 'characters', 'style']
 
 def compute_average_categories(book_id, session: Session):
+    category_averages = get_category_averages()
+    recommend_average = func.avg(Rating.recommend.cast(Integer)).label('recommend')
     overall_means = session.exec(
-        select(
-            func.avg(Rating.setting).label('setting'),
-            func.avg(Rating.plot).label('plot'),
-            func.avg(Rating.engagement).label('engagement'),
-            func.avg(Rating.characters).label('characters'),
-            func.avg(Rating.style).label('style'),
-            func.avg(Rating.recommend.cast(Integer)).label('recommend')  # Include overall average for recommendation
-        )
+        select(*category_averages, recommend_average)
     ).one()
 
     book_rating_counts = session.exec(
@@ -199,6 +194,9 @@ def get_book_statistics(s: Session) -> Dict[str, Any]:
 # print(book_statistics)
 
 # helper functions
+def get_category_averages():
+    return [func.avg(getattr(Rating, category)).label(category) for category in RATING_CATEGORIES]
+
 def get_book_ratings(book_id, session: Session):
     return session.exec(select(Rating).where(Rating.book_id == book_id)).all()
 
