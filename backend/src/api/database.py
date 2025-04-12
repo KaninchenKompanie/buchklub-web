@@ -5,19 +5,22 @@ from api.book.model import Book
 from api.rating.model import Rating
 from api.user.model import User
 from api.auth import password
-
-
+from dotenv import load_dotenv, find_dotenv
+import os
 
 engine = None
 
+# Load environment variables from the .env file
+load_dotenv(dotenv_path='./environment.env')
+
 config = {
-    "db-user": "postgres",
-    "db-pass": "qwer1234",
-    "db-network": "localhost",
-    "db-port": 5433
+    "db-user": os.getenv('PGUSER'),
+    "db-pass": os.getenv('POSTGRES_PASSWORD'),
+    "db-network": os.getenv('DB_NETWORK'),
+    "db-port": os.getenv('DB_PORT')
 }
 
-db_name = "buchklub-db"
+db_name = os.getenv('DB_NAME')
 db_url = f"postgresql://{config['db-user']}:{config['db-pass']}@{config['db-network']}:{config['db-port']}/{db_name}"
 
 engine = create_engine(db_url, echo=True)
