@@ -28,7 +28,7 @@ def compute_average_categories(book_id, s: Session):
 
     average_ratings_per_book = float(sum(count for _, count in book_rating_counts) / len(book_rating_counts))
 
-    book_ratings = s.exec(select(Rating).where(Rating.book_id == book_id)).all()
+    book_ratings = get_book_ratings(book_id, s)
     if not book_ratings:
         return None
 
@@ -66,7 +66,7 @@ def get_all_books_statistics(s: Session):
             book_stats.update({
                 'book_id': book.id,
                 'book_name': book.name,
-                'rating_count': len(s.exec(select(Rating).where(Rating.book_id == book.id)).all()),
+                'rating_count': len(get_book_ratings(book.id, s)),
                 'recommend_percentage': recommend_percentage  # Add recommendation percentage here
             })
             all_books_stats.append(book_stats)
@@ -111,10 +111,10 @@ def find_best_books(s: Session):
                     best_books[category] = {
                         'Book': book.name,
                         f'Bayesian_average': bayesian_avg,
-                        'User Count': len(s.exec(select(Rating).where(Rating.book_id == book.id)).all())
+                        'User Count': len(get_book_ratings(book.id, s))
                     }
             
-            ratings = s.exec(select(Rating).where(Rating.book_id == book.id)).all()
+            ratings = get_book_ratings(book.id, s)
             std_dev = np.std([getattr(r, category) for category in ['setting', 'plot', 'engagement', 'characters', 'style'] for r in ratings])
             book_standard_deviations[book.name] = std_dev
 
@@ -141,7 +141,7 @@ def find_most_controversial_book(book_standard_deviations, s: Session):
     most_controversial_book_title = max(book_standard_deviations, key=book_standard_deviations.get)
     most_controversial_book_id = s.exec(select(Book.id).where(Book.name == most_controversial_book_title)).one()
 
-    ratings = s.exec(select(Rating).where(Rating.book_id == most_controversial_book_id)).all()
+    ratings = get_book_ratings(most_controversial_book_id, s)
 
     sd_values = {
         "setting": np.std([r.setting for r in ratings]),
@@ -194,3 +194,7 @@ def get_book_statistics(s: Session) -> Dict[str, Any]:
 # Usage example (assuming you have a valid session object `s`)
 # book_statistics = get_book_statistics(s)
 # print(book_statistics)
+
+# helper functions
+def get_book_ratings(book_id, session: Session):
+    return session.exec(select(Rating).where(Rating.book_id == book_id)).all()
