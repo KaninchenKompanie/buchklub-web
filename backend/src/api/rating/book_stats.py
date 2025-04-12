@@ -2,7 +2,7 @@ from api.book.model import Book
 from api.rating.model import Rating
 from sqlalchemy import func, Integer
 from sqlmodel import Session, select
-from typing import Dict, Any
+from typing import Dict, Any, Tuple, Sequence
 import numpy as np
 import pandas as pd
 
@@ -23,7 +23,7 @@ def compute_average_categories(book_id: int, session: Session) -> Dict[str, floa
     if not book_rating_counts:
         return None
 
-    average_ratings_per_book = float(sum(count for _, count in book_rating_counts) / len(book_rating_counts))
+    average_ratings_per_book = get_average_ratings_per_book(book_rating_counts)
 
     book_ratings = get_book_ratings(book_id, session)
     if not book_ratings:
@@ -97,7 +97,7 @@ def find_best_books(s: Session):
     if not book_rating_counts:
         return {}, {}, {}
 
-    average_ratings_per_book = float(sum(count for _, count in book_rating_counts) / len(book_rating_counts))
+    average_ratings_per_book = get_average_ratings_per_book(book_rating_counts)
 
     for book in books:
         bayesian_avgs = compute_average_categories(book.id, s=s)
@@ -202,3 +202,6 @@ def get_book_ratings(book_id, session: Session):
 
 def calculate_bayesian_average(sum_ratings, total_ratings, average_ratings_per_book, overall_mean):
     return (float(sum_ratings) + (average_ratings_per_book * float(overall_mean))) / (total_ratings + average_ratings_per_book)
+
+def get_average_ratings_per_book(book_rating_counts: Sequence[Tuple[int, int]]) -> float:
+    return float(sum(count for _, count in book_rating_counts) / len(book_rating_counts))
