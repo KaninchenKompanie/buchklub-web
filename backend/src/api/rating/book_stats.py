@@ -6,6 +6,8 @@ from typing import Dict, Any
 import numpy as np
 import pandas as pd
 
+RATING_CATEGORIES = ['setting', 'plot', 'engagement', 'characters', 'style']
+
 def compute_average_categories(book_id, s: Session):
     overall_means = s.exec(
         select(
@@ -34,7 +36,7 @@ def compute_average_categories(book_id, s: Session):
 
     bayesian_avgs = {}
     total_ratings = len(book_ratings)
-    for category in ['setting', 'plot', 'engagement', 'characters', 'style']:
+    for category in RATING_CATEGORIES:
         sum_ratings = sum(getattr(r, category) for r in book_ratings)
         bayesian_avg = (float(sum_ratings) + (average_ratings_per_book * float(getattr(overall_means, category)))) / (total_ratings + average_ratings_per_book)
         bayesian_avgs[category] = bayesian_avg
@@ -43,7 +45,7 @@ def compute_average_categories(book_id, s: Session):
     sum_recommend = sum(r.recommend for r in book_ratings)
     #bayesian_recommend_avg = (float(sum_recommend) + (average_ratings_per_book * float(overall_means.recommend))) / (total_ratings + average_ratings_per_book)
     #bayesian_avgs['recommend'] = bayesian_recommend_avg * 100  # Convert to percentage
-    bayesian_avgs['total_average_rating'] = np.mean([bayesian_avgs[category] for category in ['setting', 'plot', 'engagement', 'characters', 'style']])
+    bayesian_avgs['total_average_rating'] = np.mean([bayesian_avgs[category] for category in RATING_CATEGORIES])
     return bayesian_avgs
 
 def get_recommendation_percentage(book_id, s: Session):
@@ -115,7 +117,7 @@ def find_best_books(s: Session):
                     }
             
             ratings = get_book_ratings(book.id, s)
-            std_dev = np.std([getattr(r, category) for category in ['setting', 'plot', 'engagement', 'characters', 'style'] for r in ratings])
+            std_dev = np.std([getattr(r, category) for category in RATING_CATEGORIES for r in ratings])
             book_standard_deviations[book.name] = std_dev
 
     return best_books, book_bayesian_avgs, book_standard_deviations
