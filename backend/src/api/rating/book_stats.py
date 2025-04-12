@@ -38,8 +38,9 @@ def compute_average_categories(book_id, s: Session):
     total_ratings = len(book_ratings)
     for category in RATING_CATEGORIES:
         sum_ratings = sum(getattr(r, category) for r in book_ratings)
-        bayesian_avg = (float(sum_ratings) + (average_ratings_per_book * float(getattr(overall_means, category)))) / (total_ratings + average_ratings_per_book)
-        bayesian_avgs[category] = bayesian_avg
+        bayesian_avgs[category] = calculate_bayesian_average(
+            sum_ratings, total_ratings, average_ratings_per_book, getattr(overall_means, category)
+        )
 
     # Calculate the Bayesian average for recommendation
     sum_recommend = sum(r.recommend for r in book_ratings)
@@ -200,3 +201,6 @@ def get_book_statistics(s: Session) -> Dict[str, Any]:
 # helper functions
 def get_book_ratings(book_id, session: Session):
     return session.exec(select(Rating).where(Rating.book_id == book_id)).all()
+
+def calculate_bayesian_average(sum_ratings, total_ratings, average_ratings_per_book, overall_mean):
+    return (float(sum_ratings) + (average_ratings_per_book * float(overall_mean))) / (total_ratings + average_ratings_per_book)
